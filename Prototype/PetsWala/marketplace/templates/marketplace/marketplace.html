@@ -3,7 +3,7 @@
 
       <div class="container">
         <!-- HERO SECTION-->
-        <section class="hero pb-3 bg-cover bg-center d-flex align-items-center" style="background: url(/static/blog/img/market.jpg)">
+        <section class="hero pb-3 bg-cover bg-center d-flex align-items-center" style="background: url(/static/img/market.jpg)">
           <div class="container">
             <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
               <div class="col-lg-6">
@@ -22,10 +22,11 @@
                 <div class="row">
                   {% for product in products %}
                   <!-- PRODUCT-->
-                  <div class="col-lg-3 col-sm-6">
+                  <div class="col-lg-3 col-sm-6" >
                     <div class="product text-center">
                       <div class="mb-3 position-relative">
-                        <div class="badge text-white badge-" ></div><a class="d-block" href="detail.html"><img class="img-fluid" src="{{product.image.url}}" alt="..."></a>
+                        <div class="badge text-white badge-" ></div>
+                        <a class="" href="/marketplace/product/{{product.id}}"><img class="" style="width: 100%;height: 15rem;" src="{{product.image.url}}" alt="..."></a>
                         <div class="product-overlay">
                           <ul class="mb-0 list-inline">
                             <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
@@ -34,7 +35,7 @@
                           </ul>
                         </div>
                       </div>
-                      <h6> <a class="reset-anchor" href="/marketplace/{{product.id}}">{{product.title}}</a></h6>
+                      <h6> <a class="reset-anchor" href="/marketplace/product/{{product.id}}">{{product.title}}</a></h6>
                       <p class="small text-muted">PKR {{product.price}}</p>
                     </div>
                   </div>
