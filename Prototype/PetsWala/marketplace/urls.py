@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns=[
-    path('', views.marketplace, name='marketplace'),
+    path('', marketplace, name='marketplace'),
+    path('product/<int:id>', product, name='marketplace-product')
     
 ]
