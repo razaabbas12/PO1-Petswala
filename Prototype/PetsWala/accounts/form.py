@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
-from .models import User, Vendor
+from .models import User, Vendor, Profile
 
 class UserSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)
@@ -45,3 +45,14 @@ class VendorSignUpForm(UserCreationForm):
         vendor.product_category = self.cleaned_data.get('product_category')
         vendor.save()
         return user
+
+class UserUpdateForm(forms.ModelForm):              #Add email later
+    class Meta:
+        model = User
+        fields = ['username']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']

@@ -59,6 +59,7 @@
               <ul class="navbar-nav ml-auto">               
                 {% comment %} <li class="nav-item"><a class="nav-link" href="#"> <i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small class="text-gray">(0)</small></a></li> {% endcomment %}
                   {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Logout</a></li>
                   {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>
@@ -119,14 +120,14 @@
         </div>
       </footer>
       <!-- JavaScript files-->
-      <script src="/static/vendor/jquery/jquery.min.js"></script>
-      <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="/static/vendor/lightbox2/js/lightbox.min.js"></script>
-      <script src="/static/vendor/nouislider/nouislider.min.js"></script>
-      <script src="/static/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-      <script src="/static/vendor/owl.carousel2/owl.carousel.min.js"></script>
-      <script src="/static/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
-      <script src="/static/js/front.js"></script>
+      <script src="/static/blog/vendor/jquery/jquery.min.js"></script>
+      <script src="/static/blog/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="/static/blog/vendor/lightbox2/js/lightbox.min.js"></script>
+      <script src="/static/blog/vendor/nouislider/nouislider.min.js"></script>
+      <script src="/static/blog/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+      <script src="/static/blog/vendor/owl.carousel2/owl.carousel.min.js"></script>
+      <script src="/static/blog/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
+      <script src="/static/blog/js/front.js"></script>
       <script>
         // ------------------------------------------------------- //
         //   Inject SVG Sprite - 
