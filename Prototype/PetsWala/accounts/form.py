@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
 from .models import User, Vendor, Profile
+from marketplace.models import Product
 
 class UserSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)
@@ -56,3 +57,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+
+
+# class AddNewProduct(forms.ModelForm):         #Implement add_product form here
+

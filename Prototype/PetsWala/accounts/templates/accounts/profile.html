@@ -6,10 +6,10 @@
 
 {% comment %} <h1>{{ user.username }}</h1> {% endcomment %}
 <section class="main_wrapper">
-    <div class="container" style="background-color: lightpink; position: relative; z-index: 6">
+    <div class="container" >
       <div class="row py-4 px-2">
         <div class="col-lg-6 col-md-12">
-          <img  src="{{ user.profile.image.url }}" alt="" width="500" height="500"/>    {% comment %} add class="rounded-circle account-img" for round user profile picture   {% endcomment %}
+          <img  src="{{ user.profile.image.url }}" alt="" width="400" height="400"/>  {% comment %}  add class="rounded-circle account-img" for round user profile picture {% endcomment %}
         </div>
         <div class="col-lg-6 col-md-12">
           <div class="presentation">
@@ -78,7 +78,6 @@
                     </div>
                 </form>
              </div>
-                </div> 
             </div>
           </div>
         </div>

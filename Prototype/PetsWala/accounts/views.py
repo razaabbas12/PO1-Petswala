@@ -12,6 +12,12 @@ def register(request):
     return render(request, 'accounts/register.html')
 
 @login_required
+def add_product(request):
+    # if request.method == 'POST':
+    
+    return render(request, 'accounts/add_product.html')
+
+@login_required
 def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
