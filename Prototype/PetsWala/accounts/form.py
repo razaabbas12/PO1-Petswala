@@ -62,7 +62,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class AddNewProduct(forms.ModelForm):         #Implement add_product form here
     # category = forms.Select()
-    # vendor = forms.Select()
+    # vendor = forms.Select()                   #Fix vendor definition in product model
     # title = forms.CharField(required=True)
     # slug = forms.CharField(required=True)
     # description = forms.CharField(required=True)
