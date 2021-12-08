@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
   <!--  Modal -->
   <div class="modal fade" id="productView" tabindex="-1" role="dialog" aria-hidden="true">
@@ -73,44 +73,16 @@
 
   <section class="main_wrapper">
     <div class="form_wrapper">
-      <form action="profile" method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data" action="">
+        {% comment %} <h1>Add Product</h1> {% endcomment %}
+        {% csrf_token %}
         <h1>Add Product</h1>
-        <div class="input_wrapper">
-          <label for="Title">Product Title</label>
-          <input type="text" placeholder="Title" id="Title" />
-        </div>
-        <div class="input_wrapper">
-          <label for="Description">Product Description</label>
-          <textarea
-            name=""
-            id="Description"
-            cols="30"
-            rows="10"
-            placeholder="Description"
-          ></textarea>
-        </div>
-        <div class="input_wrapper">
-          <label for="Price">Product Price</label>
-          <input type="number" placeholder="Price" id="Price" />
-        </div>
-        <div class="input_wrapper">
-          <label for="Category">Product Category</label>
-          <input type="text" placeholder="Category" id="Category" />
-        </div>
-        <div class="input_wrapper">
-          <label for="SKU">Product SKU</label>
-          <input type="text" placeholder="SKU" id="SKU" />
-        </div>
-        <div class="input_wrapper">
-          <label for="Tags">Product Tags</label>
-          <input type="text" placeholder="Tags" id="Tags" />
-        </div>
-        <div class="input_wrapper file_wrapper">
-          <label for="file_pic">Add Pictures</label>
-          <input type="file" style="display: none" id="file_pic" />
-        </div>
-        <div class="input_wrapper">
-          <button>Add Product</button>
+        <fieldset class="form-group">
+            {% comment %} <legend class="border-bottom mb-4">Update Info</legend> {% endcomment %}
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Add</button>
         </div>
       </form>
       <div class="img_wrapper">

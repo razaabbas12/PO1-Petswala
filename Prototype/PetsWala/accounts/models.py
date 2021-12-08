@@ -15,7 +15,7 @@ class Vendor(models.Model):
     address = models.CharField(max_length=100)
     product_category = models.CharField(max_length=20)
     def __str__(self):
-        return {self.user.username}         #fix if problem
+        return self.user.username         #fix if problem
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)   #This establishes a 1-1 relationship between objects of 2 classes ie here it means 1 user can only have 1 profile and vice versa
