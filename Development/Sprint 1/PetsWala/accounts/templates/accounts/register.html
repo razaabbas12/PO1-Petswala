@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <section>
+        <div class="container" style="padding:0px 0px 35px 0px;">
+          <div class="row">
+            <div class="col-md-10 mx-auto my-auto">
+              <div class="card">
+                <div class="card-header text-black text-align:center">
+                  <h2><center>Register As</center></h2>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <a type="button" class="btn btn-block" href="{% url 'user_register' %}">A User</a>
+                    </div>
+                    <div class="col-lg-6">
+                      <a type="button" class="btn btn-block" href="{% url 'vendor_register' %}">A Vendor</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+
+{% endblock content%}
