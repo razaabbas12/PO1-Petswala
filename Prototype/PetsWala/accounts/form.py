@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db import transaction
 from django.forms import widgets
+
+from blog.models import Post
 from .models import User, Vendor, Profile
 from marketplace.models import Category, Product
 
@@ -9,6 +11,7 @@ class UserSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     phone_number = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -19,6 +22,7 @@ class UserSignUpForm(UserCreationForm):
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
         user.phone_number = self.cleaned_data.get('phone_number')
+        user.email = self.cleaned_data.get('email')
         user.save()
         return user
 
@@ -29,6 +33,7 @@ class VendorSignUpForm(UserCreationForm):
     phone_number = forms.CharField(required=True)
     address = forms.CharField(required=True)
     product_category = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -40,6 +45,7 @@ class VendorSignUpForm(UserCreationForm):
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
         user.phone_number = self.cleaned_data.get('phone_number')
+        user.email = self.cleaned_data.get('email')
         user.save()
         vendor = Vendor.objects.create(user=user)
         vendor.address = self.cleaned_data.get('address')
@@ -48,7 +54,7 @@ class VendorSignUpForm(UserCreationForm):
         vendor.save()
         return user
 
-class UserUpdateForm(forms.ModelForm):              #Add email later
+class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username']
@@ -102,6 +108,7 @@ class AddNewProduct(forms.ModelForm):         #Implement add_product form here
             }),
             'image': forms.ClearableFileInput(attrs={
                 "class": "form-control",
+                "required": True
             }),
             'thumbnail': forms.ClearableFileInput(attrs={
                 "class": "form-control",
@@ -120,4 +127,19 @@ class AddNewProduct(forms.ModelForm):         #Implement add_product form here
     #     product.save()
     #     return product
 
+# class AddNewPost(forms.ModelForm):
+#     class Meta:
+#         model = Post
+#         fields = ['title', 'content']
 
+#         widgets={
+#             'title': forms.TextInput(attrs={
+#                 "class": "form-control",
+#                 "placeholder": "Enter Post Title here..."
+#             }),
+#             'content': forms.Textarea(attrs={
+#                 "class": "form-control",
+#                 "placeholder": "Enter Post Description here...",
+#                 "rows": 4
+#             }),
+#             }
