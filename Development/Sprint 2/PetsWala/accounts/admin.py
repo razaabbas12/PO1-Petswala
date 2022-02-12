@@ -1,0 +1,63 @@
+from django.contrib import admin, messages
+from .models import RescueServices, ServiceProvider, User, Vendor, Profile
+from .email_service import send_service_provider_approved_email,send_rescue_service_approved_email
+
+# Register your models here.
+
+admin.site.register(User)
+admin.site.register(Vendor)
+admin.site.register(Profile)
+
+
+# Service Provider Admin Actions
+@admin.action(description='Approve Selected Service Providers')
+def approved_service_prov(modeladmin, request, queryset):
+  for service_provider in queryset:
+    if service_provider.is_approved:
+      messages.error(request, f"{service_provider.user.username} is already approved.")
+      continue
+    
+    service_provider.is_approved = True
+    service_provider.save()
+    
+    sent = send_service_provider_approved_email(service_provider.user.email)
+    
+    if sent:
+      messages.info(request, f"{service_provider.user.username} approved and email sent.")
+    else:
+      messages.error(request, f"{service_provider.user.username} approved but email delivery failed.")
+    
+# Rescue Service Admin Actions
+@admin.action(description='Approve Selected Rescue Services')
+def approved_rescue_service(modeladmin, request, queryset):
+  for rescue_provider in queryset:
+    if rescue_provider.is_approved:
+      messages.error(request, f"{rescue_provider.user.username} is already approved.")
+      continue
+    
+    rescue_provider.is_approved = True
+    rescue_provider.save()
+    
+    sent = send_rescue_service_approved_email(rescue_provider.user.email)
+    
+    if sent:
+      messages.info(request, f"{rescue_provider.user.username} approved and email sent.")
+    else:
+      messages.error(request, f"{rescue_provider.user.username} approved but email delivery failed.")
+    
+
+
+class ServiceProviderAdmin(admin.ModelAdmin):
+  list_display = ['user', 'is_approved', 'service_information']
+  ordering = ['user']
+  actions = [approved_service_prov]
+
+admin.site.register(ServiceProvider, ServiceProviderAdmin)
+
+class RescueServiceAdmin(admin.ModelAdmin):
+  list_display = ['user', 'is_approved', 'service_information']
+  ordering = ['user']
+  actions = [approved_rescue_service]
+
+admin.site.register(RescueServices, RescueServiceAdmin)
+

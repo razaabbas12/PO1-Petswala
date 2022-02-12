@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div>
+  <div class="card-deck" style="margin:3%">
+    
+  {% for provider in service_providers %}
+  <row>
+      
+ 
+  <col md={4}> 
+  <div class="card">
+    <img class="card-img-top" src="provider.image" alt="">
+    <div class="card-body">
+      <h5 class="card-title">{{provider.name}}</h5>
+      <p class="card-text">{{provider.service_info}}</p>
+      <p class="card-text"><small class="text-muted">Contact# {{provider.phone_num}}</small></p>
+      <p class="card-text"><small class="text-muted">Email: {{provider.email}}</small></p>
+    </div>
+  </div>
+    </col>
+  </row>
+       
+      
+
+
+  {% endfor %}
+</div>
+</div>
+
+{% endblock content %}

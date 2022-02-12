@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+      <!--  Modal -->
+      <div
+        class="modal fade"
+        id="productView"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+
+      </div>
+
+      <section class="main_wrapper">
+        <div class="form_wrapper">
+          <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <h1>Create Post</h1>
+            <fieldset class="form-group">
+              {% comment %} <legend class="border-bottom mb-4">Update Info</legend> {% endcomment %}
+              {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Post</button>
+            </div>
+          </form>
+          <div class="img_wrapper">
+            <img src="/static/blog/img/add_prodiuct_2_color.svg" alt="" />
+          </div>
+        </div>
+      </section>
+
+{% endblock content %}
