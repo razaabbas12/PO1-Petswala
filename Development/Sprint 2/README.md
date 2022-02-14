@@ -26,18 +26,18 @@ Add product to marketplace<br>
 Specific Product Detail<br>
 View User Profile<br>
 
-Change Password
-Reset Password
-Create Blog Posts
-Edit Blog Posts
-Search Marketplace
-Edit Profile
+Change Password<br>
+Reset Password<br>
+Create Blog Posts<br>
+Edit Blog Posts<br>
+Search Marketplace<br>
+Edit Profile<br>
 
-Sign up of Service Providers
-Signup of Veterinary Doctors
-Signup of Rescue Services
-Approve Service Provider/Vet/Rescue Service (Admin)
-Listing of Services/ Vets on the Website
+Sign up of Service Providers<br>
+Signup of Veterinary Doctors<br>
+Signup of Rescue Services<br>
+Approve Service Provider/Vet/Rescue Service (Admin)<br>
+Listing of Services/ Vets on the Website<br>
 
 ------------------------------------------------------------------------------------------------
 
