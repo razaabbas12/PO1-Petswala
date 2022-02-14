@@ -18,19 +18,13 @@ SPRINT-2 SUBMISSION GUIDELINES
 LIST OF REQUIREMENTS COMPLETED SO FAR
 
 <List down use cases completed so far>
-Sign Up of General User
-  
-Login
-  
-Logout
-  
-Signup of Vendor
-
-Add product to marketplace
-  
-Specific Product Detail
-  
-View User Profile
+Sign Up of General User<br>
+Login<br>
+Logout<br>
+Signup of Vendor<br>
+Add product to marketplace<br>
+Specific Product Detail<br>
+View User Profile<br>
 
 Change Password
 Reset Password
