@@ -19,11 +19,17 @@ LIST OF REQUIREMENTS COMPLETED SO FAR
 
 <List down use cases completed so far>
 Sign Up of General User
+  
 Login
+  
 Logout
+  
 Signup of Vendor
+
 Add product to marketplace
+  
 Specific Product Detail
+  
 View User Profile
 
 Change Password
