@@ -4,7 +4,7 @@ from django.db import transaction
 from django.forms import widgets
 
 from blog.models import Post
-from .models import User, Vendor, Profile, ServiceProvider, RescueServices
+from .models import User, Vendor, Profile, ServiceProvider, RescueServices, Vet
 from marketplace.models import Category, Product
 
 class UserSignUpForm(UserCreationForm):
@@ -72,6 +72,7 @@ class ServiceSignUpForm(UserCreationForm):
         user.is_vendor = False
         user.is_serviceprovider = True
         user.is_rescue_service = False
+        user.is_vet= False
         
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
@@ -104,6 +105,7 @@ class RescueSignUpForm(UserCreationForm):
         user.is_vendor = False
         user.is_serviceprovider = False
         user.is_rescue_service = True
+        user.is_vet= False
         
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
@@ -118,6 +120,38 @@ class RescueSignUpForm(UserCreationForm):
         
         return user
 
+class VetsSignUpForm(UserCreationForm):
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    phone_number = forms.CharField(required=True)
+    address = forms.CharField(required=True)
+    experience = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        
+        user.is_vendor = False
+        user.is_serviceprovider = False
+        user.is_rescue_service = False
+        user.is_vet = True      
+        
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+        user.phone_number = self.cleaned_data.get('phone_number')
+        user.email = self.cleaned_data.get('email')
+        user.save()
+        
+        vet = Vet.objects.create(user=user)
+        vet.experience = self.cleaned_data.get('experience')
+        vet.is_approved = False
+        vet.save()
+        
+        return user
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:

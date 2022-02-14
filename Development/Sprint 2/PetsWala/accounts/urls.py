@@ -12,4 +12,7 @@ urlpatterns=[
     path('service_providers/list/',views.getServiceProviders, name='service_providers_list'),
     path('rescue_provider',views.rescue_provider.as_view(), name='rescue_providers'),
     path('rescue_providers/list/',views.getRescueProviders, name='rescue_providers_list'),
+    path('vets',views.vets.as_view(), name='vets'),
+    path('vets/list/',views.getVets, name='vets_list'),
+
 ]

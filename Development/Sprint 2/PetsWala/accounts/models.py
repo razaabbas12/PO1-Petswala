@@ -44,3 +44,11 @@ class RescueServices(models.Model):
     def __str__(self):
         return self.user.username
     
+class Vet(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    is_approved = models.BooleanField(default=False)
+    experience = models.TextField(null=True)
+    
+    def __str__(self):
+        return self.user.username
+    

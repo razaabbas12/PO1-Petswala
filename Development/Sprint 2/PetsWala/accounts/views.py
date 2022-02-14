@@ -4,7 +4,7 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 
 from marketplace.models import Product
-from .models import ServiceProvider, User, Vendor, RescueServices
+from .models import ServiceProvider, User, Vendor, RescueServices, Vet
 from .form import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -89,7 +89,16 @@ class rescue_provider(CreateView):
     def form_valid(self, form):
         form.save()
         return render(self.request, 'accounts/awaiting_confirmation.html')
-       
+  
+class vets(CreateView):
+    model = Vet
+    form_class = VetsSignUpForm
+    template_name = 'accounts/vets.html'
+
+    def form_valid(self, form):
+        form.save()
+        return render(self.request, 'accounts/awaiting_confirmation.html')
+     
 
 class add_product(CreateView):
     model = Product
@@ -153,3 +162,28 @@ def getRescueProviders(request):
             "rescue_providers" : data
         }
         return render(request,'accounts/rescue_list.html',context)
+    
+def getVets(request):
+    if request.method == 'GET':
+        vets = Vet.objects.filter(is_approved=True).all()
+        
+        data = []
+        for vet in vets:
+            try:
+                profile = Profile.objects.filter(user=vet.user).first()
+                obj = {
+                    "name" : f"{vet.user.first_name} {vet.user.last_name}",
+                    "experience" : vet.experience,
+                    "phone_num" : vet.user.phone_number,
+                    "image" : profile.image,
+                    "email" : vet.user.email
+                }
+                
+                data.append(obj)
+            except:
+                pass
+        
+        context = {
+            "vets" : data
+        }
+        return render(request,'accounts/vets_list.html',context)

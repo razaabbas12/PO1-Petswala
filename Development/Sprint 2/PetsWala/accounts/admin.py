@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
-from .models import RescueServices, ServiceProvider, User, Vendor, Profile
-from .email_service import send_service_provider_approved_email,send_rescue_service_approved_email
+from .models import RescueServices, ServiceProvider, User, Vendor, Profile, Vet
+from .email_service import send_service_provider_approved_email,send_rescue_service_approved_email, send_vets_approved_email
 
 # Register your models here.
 
@@ -45,6 +45,23 @@ def approved_rescue_service(modeladmin, request, queryset):
     else:
       messages.error(request, f"{rescue_provider.user.username} approved but email delivery failed.")
     
+@admin.action(description='Approve Selected Vets')
+def approved_vet(modeladmin, request, queryset):
+  for vet in queryset:
+    if vet.is_approved:
+      messages.error(request, f"{vet.user.username} is already approved.")
+      continue
+    
+    vet.is_approved = True
+    vet.save()
+    
+    sent = send_vets_approved_email(vet.user.email)
+    
+    if sent:
+      messages.info(request, f"{vet.user.username} approved and email sent.")
+    else:
+      messages.error(request, f"{vet.user.username} approved but email delivery failed.")
+    
 
 
 class ServiceProviderAdmin(admin.ModelAdmin):
@@ -61,3 +78,9 @@ class RescueServiceAdmin(admin.ModelAdmin):
 
 admin.site.register(RescueServices, RescueServiceAdmin)
 
+class VetAdmin(admin.ModelAdmin):
+  list_display = ['user', 'is_approved', 'experience']
+  ordering = ['user']
+  actions = [approved_vet]
+
+admin.site.register(Vet, VetAdmin)

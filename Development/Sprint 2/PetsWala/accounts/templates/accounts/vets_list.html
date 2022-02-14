@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div>
+  <div class="card-deck" style="margin:3%">
+    
+  {% for vet in vets %}
+  <row>
+      
+ 
+  <col md={4}> 
+  <div class="card">
+    <img class="card-img-top" src="vet.image" alt="">
+    <div class="card-body">
+      <h5 class="card-title">{{vet.name}}</h5>
+      <p class="card-text">{{vet.service_info}}</p>
+      <p class="card-text"><small class="text-muted">Contact# {{vet.phone_num}}</small></p>
+      <p class="card-text"><small class="text-muted">Email: {{vet.email}}</small></p>
+    </div>
+  </div>
+    </col>
+  </row>
+       
+      
+
+
+  {% endfor %}
+</div>
+</div>
+
+{% endblock content %}
