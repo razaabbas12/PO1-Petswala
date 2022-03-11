@@ -1,0 +1,92 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+{% comment %} <h1>{{ user.username }}</h1> {% endcomment %}
+<section class="main_wrapper">
+    <div class="container" >
+      <div class="row py-4 px-2">
+        <div class="col-lg-6 col-md-12">
+          <img  src="{{ user.profile.image.url }}" alt="" width="400" height="400"/>  {% comment %}  add class="rounded-circle account-img" for round user profile picture {% endcomment %}
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="presentation">
+            <h4>Professional Seller</h4>
+            <h1>{{ user.username }}</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Sapiente ex aliquid corrupti similique soluta laboriosam, quod
+              quisquam dolore. Laborum fugit autem facere iusto alias
+              consequatur, nemo ea, perspiciatis excepturi recusandae, ad
+              quibusdam ipsam! Animi adipisci dolorum sed distinctio, illum
+              veniam consequuntur vero debitis non, sit similique
+              exercitationem asperiores laborum quas provident culpa
+              quibusdam suscipit aliquid soluta! Tenetur itaque aliquid
+              quisquam incidunt eveniet nobis, iure dolorem est doloremque
+            </p>
+            <ul>
+              <li>
+                <a href="#">
+                  <i class="far fa-envelope"></i>
+                  <p>dummy_hardcode@gmail.com</p>
+                </a>
+              </li>
+              <li>
+                <a href="#"
+                  ><i class="fas fa-phone"></i>
+                  <p>+92 0000000000</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="#"
+                  ><i class="fas fa-phone-square"></i>
+                  <p>256 000 000 0000</p>
+                </a>
+              </li>
+            </ul>
+
+            <div class="buttons_wrappper mt-5">
+              <button class="btn">Contact With User</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style=" background-color: lightpink; padding:0px 0px 35px 0px; ">
+      <div class="row py-4 px-2">
+        <div class="col-md-12 mx-auto">
+          <div style="background-color: lightpink; position: relative; z-index: 6">
+            <div class="text-black">
+              <h2>Update Info</h2>
+            </div>
+            <div class="content-section">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {% comment %} <legend class="border-bottom mb-4">Update Info</legend> {% endcomment %}
+                        {{ u_form|crispy }}
+                        {{ p_form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'password_reset' %}">Change Password</a>
+                    </div>
+                </form>
+             </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+
+  
+
+{% endblock content%}
+
