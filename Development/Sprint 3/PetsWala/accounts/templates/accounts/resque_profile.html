@@ -4,21 +4,22 @@
 {% block content %}
 
 
+
 <section class="main_wrapper">
     <div class="container" >
       <div class="row py-4 px-2">
         <div class="col-lg-6 col-md-12">
-          <img class="rounded" src="{{ image }}" alt="Profile pic" width="400" height="400"/>  {% comment %}  add class="rounded-circle account-img" for round user profile picture {% endcomment %}
+          <img  src="{{ image }}" alt="" width="400" height="400"/>  {% comment %}  add class="rounded-circle account-img" for round user profile picture {% endcomment %}
         </div>
         <div class="col-lg-6 col-md-12">
           <div class="presentation">
-            <h4>{{whoami}}</h4>
+            <h4>Rescue Service</h4>
             <h1>{{ name }}</h1>
             <p>
-              {{info}}
+              {{service_information}}
             </p>
             <hr>
-            
+            <p class="text-secondary" style="font-size:medium;">Contact Information</p>
             <ul>
               <li>
                 <a href="mailto:{{email}}">
@@ -33,15 +34,12 @@
                 </a>
               </li>
             </ul>
-            <a href="#updatediv">
-              <button class="btn btn-primary rounded shadow"  type="submit">Update Information</button>
-              </a>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- style=" padding:0px 0px 35px 0px; " -->
+
   <div class="container mt-5">
     <h5 class="text-uppercase font-weight-bold">Reviews</h5>
     <hr class="mt-0 pt-0">
@@ -72,37 +70,40 @@
         {% endfor %}
       </div>
     </div>
-    <hr id="updatediv"> 
+    
   </div>
 
-  <section class="main_wrapper" >
-    <div class="container"  >
-      <div class="row py-4 px-2">
-        <div class="col-md-12 mx-auto">
-          <div style=" position: relative; z-index: 6">
-            <div class="text-black">
-              <h2>Update Info</h2>
-            </div>
-            <div class="content-section">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        {% comment %} <legend class="border-bottom mb-4">Update Info</legend> {% endcomment %}
-                        {{ u_form|crispy }}
-                        {{ p_form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Update</button>
-                        <a class="btn btn-outline-secondary" href="{% url 'password_reset' %}">Change Password</a>
-                    </div>
-                </form>
-             </div>
-            </div>
+  <div class="container mt-5">
+    <h5 class="text-uppercase font-weight-bold">Write Your Review</h5>
+    <hr>
+    {% if user.is_authenticated %}
+    <form class="review-form" method="POST" action="/accounts/review/">
+      <input type="hidden" name="uid" id="uid" value="{{ uid }}" />
+      <input type="hidden" name="url" id="url" value="{{ url }}" />
+      <div class="form-group">
+        <textarea class="form-control rounded" type="text" name="comment" placeholder="Your Review"></textarea>
+      </div>
+      {% csrf_token %}
+      <div class="form-group">
+        <div class="input rating">
+          <p class="text-uppercase font-weight-bold">Your Rating</p>
+          <div class="rating-wrapper">
+            <input type="radio" id="star-1" name="rate" value="1" /><label for="star-1" class="fas fa-star"></label>
+            <input type="radio" id="star-2" name="rate" value="2" /><label for="star-2" class="fas fa-star"></label>
+            <input type="radio" id="star-3" name="rate" value="3" /><label for="star-3" class="fas fa-star"></label>
+            <input type="radio" id="star-4" name="rate" value="4" /><label for="star-4" class="fas fa-star"></label>
+            <input type="radio" id="star-5" name="rate" value="5" /><label for="star-5" class="fas fa-star"></label>
           </div>
         </div>
-    </div>
-  </section>
-
+      </div>
+      <button class="btn btn-primary rounded shadow" type="submit">Post</button>
+      {% else %}
+      <p>You must be logged in to post the comment. <a href="{% url 'login'%}">Login Here</a></p>
+      {% endif %}
+    </form>
+    <hr>
+  </div>
+  
 
   
 

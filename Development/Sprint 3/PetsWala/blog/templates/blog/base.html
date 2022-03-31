@@ -12,6 +12,7 @@
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="/static/blog/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Lightbox-->
     <link rel="stylesheet" href="/static/blog/vendor/lightbox2/css/lightbox.min.css">
     <!-- Range slider-->
@@ -25,7 +26,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;700&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="/static/blog/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/blog/css/style.sea.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="/static/blog/css/custom.css">
     <!-- Favicon-->
@@ -37,10 +38,10 @@
     <link rel="stylesheet" href="/static/blog/css/add_product.css" />
     
   </head>
-  <body style="background-color:lightpink; ">
+  <body style="background-color:lightyellow; ">
     <div class="page-holder" >
       <!-- navbar-->
-      <header class="header" style="background-color:rgba(216, 205, 208, 0.678);">
+      <header class="header" style="background-color:rgba(119, 201, 187, 0.678);">
         <div class="container px-0 px-lg-3">
           <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="{% url 'index'%}"><span class="font-weight-bold text-uppercase text-dark">PetsWala</span></a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -55,7 +56,7 @@
                 <li class="nav-item">
                   <!-- Link--><a class="nav-link" href="{% url 'blog-home' %}">Blog</a>
                 </li>
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More Services</a>
                   <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown"><a class="dropdown-item border-0 transition-link" href="{% url 'service_providers_list'%}">Service Providers</a><a class="dropdown-item border-0 transition-link" href="{% url 'vets_list'%}">Veterinary Doctors</a><a class="dropdown-item border-0 transition-link" href="{% url 'rescue_providers_list'%}">Rescue Services</a><a class="dropdown-item border-0 transition-link" href="#">Shopping cart</a><a class="dropdown-item border-0 transition-link" href="#">Checkout</a></div>
                 </li>
                 
@@ -135,6 +136,8 @@
       <script src="/static/blog/vendor/owl.carousel2/owl.carousel.min.js"></script>
       <script src="/static/blog/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
       <script src="/static/blog/js/front.js"></script>
+      <script src="js/addons/rating.js"></script>
+      
       <script>
         // ------------------------------------------------------- //
         //   Inject SVG Sprite - 

@@ -4,7 +4,7 @@ from django.db import transaction
 from django.forms import widgets
 
 from blog.models import Post
-from .models import User, Vendor, Profile, ServiceProvider, RescueServices, Vet
+from .models import User, Vendor, Profile, ServiceProvider, RescueServices, Vet, Report
 from marketplace.models import Category, Product
 
 class UserSignUpForm(UserCreationForm):
@@ -34,6 +34,7 @@ class VendorSignUpForm(UserCreationForm):
     address = forms.CharField(required=True)
     product_category = forms.CharField(required=True)
     email = forms.EmailField(required=True)
+    service_information = forms.CharField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -51,6 +52,8 @@ class VendorSignUpForm(UserCreationForm):
         vendor.address = self.cleaned_data.get('address')
         user.is_vendor = True
         vendor.product_category = self.cleaned_data.get('product_category')
+        vendor.save()
+        vendor.service_information = self.cleaned_data.get('service_information')
         vendor.save()
         return user
 
@@ -163,6 +166,11 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+        
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['title','description','image']
 
 
 class AddNewProduct(forms.ModelForm):         #Implement add_product form here
@@ -177,7 +185,7 @@ class AddNewProduct(forms.ModelForm):         #Implement add_product form here
 
     class Meta:
         model = Product
-        fields = ['title', 'vendor', 'slug','category', 'description', 'price', 'image', 'thumbnail']
+        fields = ['title', 'slug','category', 'description', 'price', 'image', 'thumbnail']
 
         widgets={
             'title': forms.TextInput(attrs={
@@ -215,16 +223,20 @@ class AddNewProduct(forms.ModelForm):         #Implement add_product form here
 
         }
 
-    # @transaction.atomic
-    # def save(self):
-    #     product = super().save(commit=False)
-    #     product.title = self.cleaned_data.get('title')
-    #     product.description = self.cleaned_data.get('description')
-    #     product.price = self.cleaned_data.get('price')
-    #     product.image = self.cleaned_data.get('image')
-    #     product.thumbnail = self.cleaned_data.get('thumbnail')
-    #     product.save()
-    #     return product
+    @transaction.atomic
+    def save(self):
+        product = super().save(commit=False)
+        product.title = self.cleaned_data.get('title')
+        product.slug = self.cleaned_data.get('slug')
+        product.category = self.cleaned_data.get('category')
+        product.description = self.cleaned_data.get('description')
+        vendor = Vendor.objects.filter(user=self.instance.user).first()
+        product.vendor = vendor
+        product.price = self.cleaned_data.get('price')
+        product.image = self.cleaned_data.get('image')
+        product.thumbnail = self.cleaned_data.get('thumbnail')
+        product.save()
+        return product
 
 # class AddNewPost(forms.ModelForm):
 #     class Meta:
