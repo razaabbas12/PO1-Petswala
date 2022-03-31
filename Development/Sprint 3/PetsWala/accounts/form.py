@@ -4,8 +4,14 @@ from django.db import transaction
 from django.forms import widgets
 
 from blog.models import Post
-from .models import User, Vendor, Profile, ServiceProvider, RescueServices, Vet, Report
+from .models import *
 from marketplace.models import Category, Product
+
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model  = UserAddress
+        exclude = ('user','shipping',)
 
 class UserSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)

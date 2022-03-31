@@ -1,0 +1,70 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+          {% if empty %}
+          <p class="alert aler-warning" style="text-align:center;margin: 100px 0px 200px 0px">{{ empty_message }}</p>
+          {% else %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Item Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for item in cart.cartitem_set.all %}
+                    <tr>
+                        <td class="col-sm-8 col-md-6">
+                        <div class="media">
+                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="{{item.product.thumbnail.url}}" style="width: 72px; height: 72px;"> </a>
+                            <div class="media-body ml-3">
+                                <h4 class="media-heading"><a href="#">{{item.product}}</a></h4>
+                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                            </div>
+                        </div></td>
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                        <strong>x{{item.quantity}}</strong>
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong>{{item.product.price}}</strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong>{{item.line_total}}</strong></td>
+                        <td class="col-sm-1 col-md-1">
+                        <a href="{% url 'update_cart' item.product.id %}?qty=0"><button type="button" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Remove
+                        </button></a></td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>{{cart.total}}</strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                        <a href="{% url 'marketplace' %}"><button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                        </button></a></td>
+                        <td>
+                          <a href="{% url 'checkout' %}">
+                        <button type="button" class="btn btn-success">
+                            Checkout <span class="glyphicon glyphicon-play"></span>
+                        </button></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
