@@ -210,3 +210,7 @@ def user_add_address(request):
                 return HttpResponseRedirect(reverse(str(redirect)))
         else:
             raise Http404
+        
+def order_complete(request):
+    template = 'marketplace/order-comlete.html'
+    return render(request, template, {})
