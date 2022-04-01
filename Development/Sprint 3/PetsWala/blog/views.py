@@ -1,4 +1,6 @@
 from audioop import reverse
+from dataclasses import field
+from pyexpat import model
 from django import urls
 from django.forms import SlugField
 from django.shortcuts import render, redirect, get_object_or_404
@@ -115,8 +117,10 @@ class BlogPostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class AddCommentView(LoginRequiredMixin, CreateView, SuccessMessageMixin):
     model = Comment
     fields = ['body']
-    success_url = urls.reverse_lazy('blog-home')
     success_message = 'New Comment Added'
+    
+    def get_success_url(self):
+        return urls.reverse_lazy('post-detail', kwargs={'pk': self.object.post.id})
     
     def form_valid(self, form):
         form.instance.name = self.request.user
