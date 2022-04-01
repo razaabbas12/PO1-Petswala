@@ -1,6 +1,15 @@
-<h1>
-  Report revcd
-</h1>
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<section class="main_wrapper">
+<h3>
+  Your report has been submitted.
+</h3>
 <p>
-  Your report id is {{ rep_id }}
+  Admin will review your report and act accordingly.
 </p>
+<a href="/">
+<p>Go to Home Page</p>
+</a>
+</section>
+{% endblock content%}

@@ -9,8 +9,7 @@
   <div class="container">
     <div class="row py-4 px-2">
       <div class="col-lg-6 col-md-12">
-        <img src="{{ image }}" alt="" width="400" height="400" /> {% comment %} add class="rounded-circle account-img"
-        for round user profile picture {% endcomment %}
+        <img class="img-fluid rounded" src="{{ image }}" alt="profile pic"  /> 
       </div>
       <div class="col-lg-6 col-md-12">
         <div class="presentation">
@@ -25,17 +24,17 @@
             <li>
               <a href="mailto:{{email}}">
                 <i class="far fa-envelope"></i>
-                <p>{{email}}</p>
+                {{email}}
               </a>
             </li>
             <li>
               <a href="tel:{{phone_number}}"><i class="fas fa-phone"></i>
-                <p>{{phone_number}}</p>
+                {{phone_number}}
               </a>
             </li>
           </ul>
           {% if user.is_authenticated %}
-            <a href="/accounts/report/{{user.id}}/{{uid}}" class="btn btn-danger">
+            <a href="/accounts/report/{{user.id}}/{{uid}}" class="btn btn-danger rounded shadow">
               Report
             </a>
           {% endif %}

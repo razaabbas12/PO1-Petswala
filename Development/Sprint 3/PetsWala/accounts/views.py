@@ -404,6 +404,18 @@ def whoami(user_):
     else:
         return "User"
     
+def whoamilink(user_):
+    if user_.is_vendor:
+        return "Vendor"
+    elif user_.is_serviceprovider:
+        return "service_profile"
+    elif user_.is_rescue_service:
+        return "resque_profile"
+    elif user_.is_vet:
+        return "vet_profile"
+    else:
+        return "User"
+    
 def report_view(request, repotee_id, reported_id):
     if request.method=="GET":
         ted_user = User.objects.get(id=reported_id)
@@ -412,7 +424,9 @@ def report_view(request, repotee_id, reported_id):
             "repotee": repotee_id,
             "reported": reported_id,
             "name": f"{ted_user.first_name} {ted_user.last_name}",
-            "form": ReportForm
+            "form": ReportForm,
+            "link": whoamilink(ted_user),
+            "role": whoami(ted_user)
         }
         
         return render(request,'accounts/report_init.html', context)

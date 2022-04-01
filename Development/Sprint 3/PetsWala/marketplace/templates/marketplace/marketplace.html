@@ -1,9 +1,9 @@
 {% extends "blog/base.html" %}
 {% block content %}
 
-      <div class="container">
+      <div class="container" style="padding-top: 2%;">
         <!-- HERO SECTION-->
-        <section class="hero pb-3 bg-cover bg-center d-flex align-items-center" style="background: url(/static/blog/img/market.jpg)">
+        <section class="hero pb-3 bg-cover bg-center d-flex align-items-center rounded" style="background: url(/static/blog/img/market.jpg); padding-top:13%;">
           <div class="container">
             <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
               <div class="col-lg-6">
@@ -18,8 +18,8 @@
         <div class="row px-2 px-lg-3 py-lg-4 align-items-center">
           <form class="d-flex" method=POST action="{% url 'search-marketplace'%}">
             {% csrf_token %}
-            <input class="form-control me-2" type="search" value="{{ searched }}" placeholder="Search" aria-label="Search" name="searched">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <input class="form-control me-2 rounded" type="search" value="{{ searched }}" placeholder="Search" aria-label="Search" name="searched">
+            <button class="btn btn-outline-secondary rounded" type="submit">Search</button>
           </form>
         </div>
 

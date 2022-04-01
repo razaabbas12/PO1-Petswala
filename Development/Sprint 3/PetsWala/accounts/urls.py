@@ -20,4 +20,5 @@ urlpatterns=[
     path('vets/list/',views.getVets, name='vets_list'),
     path('review/', views.Review_rate, name='review-rate'),
     path('report/<int:repotee_id>/<int:reported_id>', views.report_view, name="reports")
+    
 ]
