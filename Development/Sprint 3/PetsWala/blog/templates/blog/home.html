@@ -7,6 +7,14 @@
     </div>
 <div  class="shadow-sm p-3 mb-5 bg-white rounded" style=" margin-bottom:5px;">
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="text-center alert alert-{{ message.tags }}">
+            {{ message|safe }}
+        </div>
+    {% endfor %}
+{% endif %}
+
     {% for post in posts %}
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
         <article class="media content-section">

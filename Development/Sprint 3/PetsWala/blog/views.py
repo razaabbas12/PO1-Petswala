@@ -10,7 +10,8 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 # from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-#from django.http import HttpResponse
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponse
 
 
 
@@ -30,28 +31,28 @@ def about(request):
 def contact_us(request):
     return render(request, 'blog/contact.html')
 
-def detail(request, slug):
-    post = Post.objects.get(slug=slug)
+# def detail(request, slug):
+#     post = Post.objects.get(slug=slug)
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
 
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.post = post
-            obj.save()
+#         if form.is_valid():
+#             obj = form.save(commit=False)
+#             obj.post = post
+#             obj.save()
 
-            return redirect('post-detail', slug=post.slug)
-    else:
-        form = CommentForm()
+#             return redirect('post-detail', slug=post.slug)
+#     else:
+#         form = CommentForm()
 
 
-    context = {
-        'post':post,
-        'form':form
-    }
+#     context = {
+#         'post':post,
+#         'form':form
+#     }
 
-    return render(request, 'blog/post_detail.html', context)
+#     return render(request, 'blog/post_detail.html', context)
 
 
 
@@ -63,26 +64,7 @@ class BlogPostListView(ListView):
 
 class BlogPostDetailView(DetailView):
     model = Post
-    # slug_field = "slug"
-
-    # form = CommentForm
-
-    # def post(self, request, *args, **kwargs):
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         post = self.get_object()
-    #         form.instance.user = request.user
-    #         form.instance.post = post
-    #         form.save()
-
-    #         return redirect(reverse("post", kwargs={
-    #             'slug': post.slug
-    #         }))
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["form"] = self.form
-    #     return context
+    
 
 
 
@@ -122,19 +104,20 @@ class BlogPostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         else:
             return False
 
-# class AddCommentView(LoginRequiredMixin, CreateView):
-#     model = Comment
-#     fields = ['body']
+class AddCommentView(LoginRequiredMixin, CreateView, SuccessMessageMixin):
+    model = Comment
+    fields = ['body']
+    success_url = urls.reverse_lazy('blog-home')
+    success_message = 'New Comment Added'
     
-#     def form_valid(self, form):
-#         form.instance.name = self.request.user
-#         #blog_comment.post_id = self.pk_url_kwarg
-#         #post = Post.objects.get(pk=self.request.POST.get('pk'))
-#         post = get_object_or_404(Post, pk=self.request.POST.get('pk'))
-#         form.instance.post = post
-
-
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.name = self.request.user
+        post = Post.objects.get(id=self.kwargs.get('pk'))
+        form.instance.post = post
+        #blog_comment.post_id = self.pk_url_kwarg
+        #post = Post.objects.get(pk=self.request.POST.get('pk'))
+        
+        return super().form_valid(form)
     
     
 
