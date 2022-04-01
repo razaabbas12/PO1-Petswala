@@ -31,6 +31,14 @@ def about(request):
 def contact_us(request):
     return render(request, 'blog/contact.html')
 
+def search_posts(request):
+    if request.method == "POST":
+        searched_post = request.POST['searched_post']
+        posts = Post.objects.filter(title__contains = searched_post)
+        return render(request, 'blog/search_posts.html', {'searched_post':searched_post, 'posts':posts})
+    else:
+        return render(request, 'blog/search_posts.html', {})
+
 # def detail(request, slug):
 #     post = Post.objects.get(slug=slug)
 

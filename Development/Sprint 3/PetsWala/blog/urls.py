@@ -12,5 +12,6 @@ urlpatterns = [
     path('about/', views.about, name='blog-about'),
     path('contact/', views.contact_us, name='blog-contact-us'),
     path('blog/post/<int:pk>/comment/', AddCommentView.as_view(), name='add_comment'),
+    path('blog/search_posts/', views.search_posts, name='search-posts'),
     
 ]
