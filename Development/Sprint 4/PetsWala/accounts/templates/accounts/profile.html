@@ -94,6 +94,9 @@
                         {% comment %} <legend class="border-bottom mb-4">Update Info</legend> {% endcomment %}
                         {{ u_form|crispy }}
                         {{ p_form|crispy }}
+                        {% if add_form%}
+                        {{ add_form|crispy }}
+                        {% endif %}
                     </fieldset>
                     <div class="form-group">
                         <button class="btn btn-outline-info" type="submit">Update</button>

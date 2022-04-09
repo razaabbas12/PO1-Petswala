@@ -36,14 +36,33 @@ def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
+        add_form=None
+        if request.user.is_serviceprovider:
+            add_form = ServiceUpdateForm(request.POST, instance=request.user.serviceprovider)
+        elif request.user.is_rescue_service:
+            add_form = RescueUpdateForm(request.POST, instance=request.user.rescueservice)
+        elif request.user.is_vet:
+            add_form = VetUpdateForm(request.POST, instance=request.user.vet)
+        else:
+            pass
+            
+        if u_form.is_valid() and p_form.is_valid() and add_form and add_form.is_valid():
             u_form.save()
             p_form.save()
+            add_form.save()
             messages.success(request, f'Your Profile Information Has Been Updated')
             return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+        add_form = None
+        if request.user.is_serviceprovider:
+            add_form = ServiceUpdateForm(instance=request.user.serviceprovider)
+        elif request.user.is_rescue_service:
+            add_form = RescueUpdateForm(instance=request.user.rescueservice)
+        elif request.user.is_vet:
+            add_form = VetUpdateForm(instance=request.user.vet)
+        
 
     prof = Profile.objects.filter(user=request.user).first()
     user_ = request.user
@@ -90,6 +109,7 @@ def profile(request):
             "reviews" :reviews,
             'u_form': u_form,
             'p_form': p_form,
+            "add_form": add_form,
             "name" : f"{user_.first_name} {user_.last_name}",
             "image": prof.image.url,
             "phone_number": user_.phone_number,

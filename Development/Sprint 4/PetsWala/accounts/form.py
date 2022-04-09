@@ -167,20 +167,25 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username','first_name','last_name','phone_number','email']
 
-class Vendorupadteform(forms.ModelForm):
+class VendorUpadteForm(forms.ModelForm):
     class Meta:
         model = Vendor
         fields = ['address','product_category','service_information']
         
-class Serviceupdateform(forms.ModelForm):
+class ServiceUpdateForm(forms.ModelForm):
     class Meta:
         model = ServiceProvider
         fields = ['address','service_information']
 
-class Rescueupdateform(forms.ModelForm):
+class RescueUpdateForm(forms.ModelForm):
     class Meta:
         model = RescueServices
         fields = ['address','service_information']
+
+class VetUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Vet
+        fields = ['address','experience']
         
 
 class ProfileUpdateForm(forms.ModelForm):

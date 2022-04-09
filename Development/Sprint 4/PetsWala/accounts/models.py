@@ -57,6 +57,7 @@ class Vendor(models.Model):
     
 class ServiceProvider(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    address = models.CharField(max_length=100)
     is_approved = models.BooleanField(default=False)
     service_information = models.TextField(null=True)
     
@@ -65,6 +66,7 @@ class ServiceProvider(models.Model):
     
 class RescueServices(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    address = models.CharField(max_length=100)
     is_approved = models.BooleanField(default=False)
     service_information = models.TextField(null=True)
     
@@ -73,6 +75,7 @@ class RescueServices(models.Model):
     
 class Vet(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    address = models.CharField(max_length=100)
     is_approved = models.BooleanField(default=False)
     experience = models.TextField(null=True)
     
