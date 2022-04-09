@@ -1,0 +1,48 @@
+{% extends "blog/base.html" %}             {% comment %} MAIN BLOG PAGE {% endcomment %}
+{% block content %}
+
+<div class="container">
+    <div class="row px-2 px-lg-3 py-lg-4 align-items-center">
+        <form class="d-flex" method=POST action="{% url 'search-posts'%}">
+        {% csrf_token %}
+        <input class="rounded form-control me-2" type="search" value="{{ searched }}" placeholder="Search Posts" aria-label="Search" name="searched_post">
+        <button class="rounded btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <div style="padding-bottom: 2%;">
+        <a class="btn btn-primary rounded shadow" href="{% url 'post-create' %}" role="button">Add New Post</a>
+        <!-- <a class="btn btn-secondary" href="{% url 'post-create' %}">Add New Post</a> -->
+    </div>
+
+    <div  class="shadow-sm p-3 mb-5 bg-white rounded" style=" margin-bottom:5px;">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+        {% for post in posts %}
+            <div class="shadow p-3 mb-5 bg-white rounded" >
+            <article class="media content-section">
+                <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}" width="50" height="50">
+                <div class="media-body">
+                    <div class="article-metadata">
+                    <div class="mr-2" >{{ post.author.first_name }} {{ post.author.last_name }}</div>
+                    <small class="text-muted">Posted on: {{ post.date_posted|date:"F d, Y" }}</small>
+                    </div>
+                    <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                </div>
+            </article>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock content %}

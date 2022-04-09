@@ -1,0 +1,68 @@
+{% extends "blog/base.html" %}
+{% load pagination_tags %}
+{% block content %}
+
+<div class="container" style="padding-top: 2%;">
+  <!-- HERO SECTION-->
+  <section class="hero pb-3 bg-cover bg-center d-flex align-items-center rounded" style="background: url(/static/blog/img/market.jpg); padding-top:13%;">
+    <div class="container">
+      <div class="row px-4 px-lg-5 py-lg-4 align-items-center">
+        <div class="col-lg-6">
+
+          <h1 class="h2 text-uppercase mb-0">Marketplace</h1>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+  <div class="row px-2 px-lg-3 py-lg-4 align-items-center">
+    <form class="d-flex" method=POST action="{% url 'search-marketplace'%}">
+      {% csrf_token %}
+      <input class="form-control me-2 rounded" type="search" value="{{ searched }}" placeholder="Search" aria-label="Search" name="searched">
+      <button class="btn btn-outline-secondary rounded" type="submit">Search</button>
+    </form>
+  </div>
+
+  <section class="py-5">
+    <div class="container p-0">
+      <div class="row">
+        <div class="col-lg-12 order-1 order-lg-2 mb-5 mb-lg-0">
+          
+          <div class="row">
+            {% autopaginate products 1 %}
+            {% for product in products %}
+            <!-- PRODUCT-->
+            <div class="col-lg-3 col-sm-6" >
+              <div class="product text-center">
+                <div class="mb-3 position-relative">
+                  <div class="badge text-white badge-" ></div>
+                  <a class="" href="/marketplace/product/{{product.id}}"><img class="rounded" style="width: 100%;height: 15rem;" src="{{product.image.url}}" alt="Product's Image"></a>
+                  <div class="product-overlay">
+                    <ul class="mb-0 list-inline">
+                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
+                      <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="{% url 'update_cart' product.id %}">Add to cart</a></li>
+                      <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="/marketplace/product/{{product.id}}" data-toggle="modal"><i class="fas fa-expand"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <h6> <a class="reset-anchor" href="/marketplace/product/{{product.id}}">{{product.title}}</a></h6>
+                <p class="small text-muted">PKR {{product.price}}</p>
+              </div>
+            </div>
+            {% endfor %}
+            
+          </div>
+          <div class="float-right">
+            {% paginate %}
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+      
+
+{% endblock content %}

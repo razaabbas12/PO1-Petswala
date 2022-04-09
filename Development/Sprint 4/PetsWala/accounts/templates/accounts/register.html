@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <section>
+        <div class="container" style="padding:0px 0px 35px 0px;">
+          <div class="row">
+            <div class="col-md-10 mx-auto my-auto">
+              <div class="card">
+                <div class="card-header text-black text-align:center">
+                  <h2><center>Register as a</center></h2>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-12" style="padding: 0.5%;">
+                      <a  href="{% url 'user_register' %}"><center>User </center></a>
+                    </div>
+                    <div class="col-lg-12" style="padding: 0.5%;">
+                      <a  href="{% url 'vendor_register' %}"><center>Vendor</center></a>
+                    </div>
+                    <div class="col-lg-12" style="padding: 0.5%;">
+                      <a  href="{% url 'vets' %}"><center>Vet</center></a>
+                    </div>
+                    <div class="col-lg-12" style="padding: 0.5%;">
+                      <a href="{% url 'service_provider' %}"><center>Service Provider</center></a>
+                    </div>
+                    <div class="col-lg-12" style="padding: 0.5%;">
+                      <a  href="{% url 'rescue_providers' %}"><center>Rescue Service</center></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+
+{% endblock content%}
