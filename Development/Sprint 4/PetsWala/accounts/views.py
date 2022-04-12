@@ -46,10 +46,12 @@ def profile(request):
         else:
             pass
             
-        if u_form.is_valid() or p_form.is_valid() or add_form.is_valid():
+        if u_form.is_valid() or p_form.is_valid():
             u_form.save()
             p_form.save()
-            add_form.save()
+            if add_form:
+                if add_form.is_valid():
+                    add_form.save()
             messages.success(request, f'Your Profile Information Has Been Updated')
             return redirect('profile')
     else:

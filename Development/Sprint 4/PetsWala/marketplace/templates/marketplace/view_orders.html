@@ -34,10 +34,14 @@
                 <div class="media-body">
                     <div class="article-metadata">
                     <div class="mr-2" >Username: {{ order.user.username }}</div>
-                    <small class="text-muted">Posted on: {{ order.timestamp|date:"F d, Y" }}</small>
-                    <p>Product: <a class="article-title" href="#">{{ order.product }}</a></p>
+                    {% comment %} <small class="text-muted">Posted on: {{ order.timestamp|date:"F d, Y" }}</small> {% endcomment %}
+                    <small class="text-muted">Posted on: {{ order.timestamp }}</small><br>
+                    <small class="text-muted">Product: {{ order.product }}</small><br>
                     <small class="text-muted">Qty: {{ order.quantity }}</small><br>
-                    <small class="text-muted">Price: {{ order.line_total }}</small>
+                    <small class="text-muted">Total Price: {{ order.line_total }}</small><br>
+                    <small class="text-muted">Ship to: {{ order.user.address }}</small><br>
+                    {% comment %} <small class="text-muted">Order ID: {{  }}</small><br> {% endcomment %}
+                    {% comment %} <toggle >Status: {{ status }}</toggle> {% endcomment %}
                     {% comment %} <small class="text-muted">Order ID: {{ order.order_id }}</small> {% endcomment %}
                     </div>
                     

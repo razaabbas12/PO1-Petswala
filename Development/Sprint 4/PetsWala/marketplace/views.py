@@ -225,6 +225,6 @@ def view_orders(request):
     # users = User.objects.filter(username = vendor_orders.user)
     context={
         'orders': vendor_orders,
-        # 'user': users
+        # 'status': 
     }
     return render(request, template, context)
