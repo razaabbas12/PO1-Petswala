@@ -8,16 +8,18 @@ from .models import *
 from marketplace.models import Category, Product
 
 
-class UserAddressForm(forms.ModelForm):
-    class Meta:
-        model  = UserAddress
-        exclude = ('user','shipping',)
+# class UserAddressForm(forms.ModelForm):
+#     class Meta:
+#         model  = UserAddress
+#         exclude = ('user','shipping',)
 
 class UserSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     phone_number = forms.CharField(required=True)
     email = forms.EmailField(required=True)
+    address = forms.CharField(required=True)
+    city = forms.CharField(required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -29,6 +31,8 @@ class UserSignUpForm(UserCreationForm):
         user.last_name = self.cleaned_data.get('last_name')
         user.phone_number = self.cleaned_data.get('phone_number')
         user.email = self.cleaned_data.get('email')
+        user.address = self.cleaned_data.get('address')
+        user.city = self.cleaned_data.get('city')
         user.save()
         return user
 
@@ -165,7 +169,7 @@ class VetsSignUpForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','phone_number','email']
+        fields = ['username','first_name','last_name','phone_number','email', 'address']
 
 class VendorUpadteForm(forms.ModelForm):
     class Meta:

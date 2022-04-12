@@ -13,10 +13,13 @@ class User(AbstractUser):
     is_vet = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
     is_blocked = models.BooleanField(default=False)
+
     
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=20)
+    address = models.CharField(default="ABC", max_length=100)
+    city = models.CharField(default="ABC", max_length=20)
 
 class UserAddress(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)

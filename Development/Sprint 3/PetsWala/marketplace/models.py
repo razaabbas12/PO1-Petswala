@@ -111,7 +111,7 @@ class Order(models.Model):
     #address
     sub_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     final_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
-    tax_total = models.DecimalField(default = 120.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
+    tax_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     order_id = models.CharField(max_length = 120, default = 'ABC')
     cart = models.ForeignKey(Cart, on_delete = models.CASCADE)
     status = models.CharField(max_length = 120, choices = STATUS_CHOICES, default = "Started")

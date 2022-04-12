@@ -46,7 +46,7 @@ def profile(request):
         else:
             pass
             
-        if u_form.is_valid() and p_form.is_valid() and add_form and add_form.is_valid():
+        if u_form.is_valid() or p_form.is_valid() or add_form.is_valid():
             u_form.save()
             p_form.save()
             add_form.save()

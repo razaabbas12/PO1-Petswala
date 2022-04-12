@@ -66,9 +66,11 @@
                   {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Logout</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Cart</a></li>
                     {% if user.is_vendor %}
                       <li class="nav-item"><a class="nav-link" href={% url 'add_product' %}> <i class="fas fa-user-alt mr-1 text-gray"></i>Add Product</a></li>
+                      <li class="nav-item"><a class="nav-link" href="{% url 'view_orders' %}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Orders</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Cart</a></li>
                     {% endif %}
                   {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>

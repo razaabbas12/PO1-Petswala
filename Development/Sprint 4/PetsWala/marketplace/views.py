@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, Ht
 from .models import *
 from .utils import id_generator
 from accounts.models import Profile, User, UserAddress 
-from accounts.form import UserAddressForm
+# from accounts.form import UserAddressForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -112,7 +112,7 @@ def update_cart(request, id):
         pass
     except:
         pass
-    cart_item, created = CartItem.objects.get_or_create(cart = cart, product = product)
+    cart_item, created = CartItem.objects.get_or_create(cart = cart, product = product, vendor = product.vendor.user.username, user = request.user)
     if created:
         print("yeah")
     if int(qty) == 0 and update_qty:
@@ -153,23 +153,26 @@ def checkout(request):
         new_order = Order()
         new_order.cart = cart
         new_order.user = request.user
+        new_order.address = request.user.address
+        new_order.city = request.user.city
         new_order.order_id = id_generator()
         new_order.sub_total = cart.total
+        # new_order.final_total = cart.total
         new_order.save()
     except:
         return HttpResponseRedirect(reverse('cart'))
 
     # obj = get_object_or_404(UserAddress, user = request.user)
-    try:
-        address_form = UserAddressForm(request.POST or None, instance=request.user.useraddress)
-    except UserAddress.DoesNotExist:
-        new_address = UserAddress()
-        new_address.user = request.user
-        new_address.save()
-        address_form = UserAddressForm(request.POST or None, instance=request.user.useraddress)
-    # once the user finishes the payment(find commented code below)
-    # new_order.status = "Finished"
-    # new.order.save()
+    # try:
+    #     address_form = UserAddressForm(request.POST or None, instance=request.user.useraddress)
+    # except UserAddress.DoesNotExist:
+    #     new_address = UserAddress()
+    #     new_address.user = request.user
+    #     new_address.save()
+    #     address_form = UserAddressForm(request.POST or None, instance=request.user.useraddress)
+    # # once the user finishes the payment(find commented code below)
+    # # new_order.status = "Finished"
+    # # new.order.save()
     for order_item in new_order.cart.cartitem_set.all():
         print(order_item.quantity)
     if new_order.status == "Finished":
@@ -178,39 +181,50 @@ def checkout(request):
         del request.session["items_total"]
         return HttpResponseRedirect(reverse('cart'))
 
-    context = {'address_form':address_form, 'new_order':new_order}
+    context = {'new_order':new_order}
     template = 'marketplace/checkout.html'
     return render(request, template, context)
 
-def user_add_address(request):
-    try:
-        redirect = request.GET.get("redirect")
-    except:
-        redirect = None
-    if request.method == 'POST':
-        form = UserAddressForm(request.POST)
-        inst = UserAddress.objects.get(user = request.user)
-        inst.address = request.POST.get('address')
-        inst.address2 = request.POST.get('address2')
-        inst.city = request.POST.get('city')
-        inst.state = request.POST.get('state')
-        inst.country = request.POST.get('country')
-        inst.zipcode= request.POST.get('zipcode')
-        inst.phone_number = request.POST.get('phone_number')
-        billing = request.POST.get('billing')
-        if billing == None:
-            inst.billing = False
-        else:
-            inst.billing = True
-        inst.save()
-        if form.is_valid():
-            form = UserAddressForm(request.POST, request.FILES, instance=request.user)
-            form.save()
-            if redirect is not None:
-                return HttpResponseRedirect(reverse(str(redirect)))
-        else:
-            raise Http404
+# def user_add_address(request):
+#     try:
+#         redirect = request.GET.get("redirect")
+#     except:
+#         redirect = None
+#     if request.method == 'POST':
+#         form = UserAddressForm(request.POST)
+#         inst = UserAddress.objects.get(user = request.user)
+#         inst.address = request.POST.get('address')
+#         inst.address2 = request.POST.get('address2')
+#         inst.city = request.POST.get('city')
+#         inst.state = request.POST.get('state')
+#         inst.country = request.POST.get('country')
+#         inst.zipcode= request.POST.get('zipcode')
+#         inst.phone_number = request.POST.get('phone_number')
+#         billing = request.POST.get('billing')
+#         if billing == None:
+#             inst.billing = False
+#         else:
+#             inst.billing = True
+#         inst.save()
+#         if form.is_valid():
+#             form = UserAddressForm(request.POST, request.FILES, instance=request.user)
+#             form.save()
+#             if redirect is not None:
+#                 return HttpResponseRedirect(reverse(str(redirect)))
+#         else:
+#             raise Http404
         
 def order_complete(request):
     template = 'marketplace/order-comlete.html'
     return render(request, template, {})
+
+
+def view_orders(request):
+    template = 'marketplace/view_orders.html'
+    vendor_orders = CartItem.objects.filter(vendor = request.user.username)
+    # users = User.objects.filter(username = vendor_orders.user)
+    context={
+        'orders': vendor_orders,
+        # 'user': users
+    }
+    return render(request, template, context)

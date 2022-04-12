@@ -15,7 +15,7 @@
                     <div class="md:grid md:grid-cols-3 gap-2 ">
                         <div class="col-span-2 p-5">
                             <h1 class="text-xl font-medium " style="margin-bottom: 20px">Address Details</h1>
-                            <form class="" action='{% url "user_add_address" %}?redirect=checkout' method="post">
+                            <form class="" action="{% url 'user_add_address' %} ?redirect=checkout" method="post">
                               {% csrf_token %}
                                 {{address_form|crispy}}
                                 <button type="submit" class = "btn btn-secondary" name="button">Update Address</button>
