@@ -1,51 +1,48 @@
 {% extends "blog/base.html" %}
 {% block content %}
 
-  
-<div class="row mb-5">
-  {% if not found%}
-    <h1 class="text-center">Product Not Found</h1>
-  {% elif found %}
-    <section class="main_wrapper">
-      <div class="container" >
-        <div class="row py-4 px-2">
-          <div class="col-lg-6 col-md-12">
+<section class="py-5">
+  <div class="container">
+    <div class="row mb-5">
+      {% if not found%}
+      <h1 class="text-center">Product Not Found</h1>
+
+      {% elif found %}
+      <div class="col-lg-6">
+        <div class="row m-sm-0">
+          <div class="col-sm-10 order-1 order-sm-2">
             <div class="owl-carousel product-slider" data-slider-id="1">
               <a class="d-block" href={{product.image.url}} data-lightbox="product" title={{product.title}}>
-                <img class="img-fluid rounded" src="{{product.image.url}}" alt="Product pic"/>
+                <img class="img-fluid rounded" src={{product.image.url}} alt={{product.title}}>
               </a>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="presentation">
-              <h2>{{product.title}}</h2>
-              <p class="text-muted lead" >PKR: {{product.price}}</p>
-              <p class="text-medium">Description: {{product.description}}</p>
-              <hr>
-              <div class="row align-items-stretch mb-4">
-                <div class="col-sm-5 pr-sm-0">
-                  <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white rounded"><span
-                      class="small text-gray mr-4 rounded">Quantity:</span>
-                      <div class="quantity rounded">
-                        <form action="{% url 'update_cart' product.id %}" method="get">
-                          <input class="form-control border-1 shadow-0 p-0 rounded" id="qty" name="qty" type="number" value="1" min="1" max="100">
-                      </div>
-                  </div>
-                </div>
-                <div class="col-sm-3 pl-sm-0"><button
-                  class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 rounded"
-                  type="submit" name="button">Add to cart</button></div>
-                  </form>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  {% endif %}
-</div>
-  
+      <div class="col-lg-6">
+        <h1>{{product.title}}</h1>
+        <p class="text-muted lead">PKR: {{product.price}}</p>
+        <p class="text-medium mb-4">{{product.description}}</p>
+        <div class="row align-items-stretch mb-4">
+          <div class="col-sm-5 pr-sm-0">
+            <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white rounded"><span
+                class="small text-uppercase text-gray mr-4 no-select rounded">Quantity:</span>
+              <div class="quantity rounded">
+                <form class="" action="{% url 'update_cart' product.id %}" method="get">
+                  <input class="form-control border-1 shadow-0 p-0 rounded" name = "qty" type="number" value="1">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 pl-sm-0"><button
+              class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 rounded"
+              type="submit" name="button">Add to cart</button></div>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
 
   <div class="container mt-5">
     <h5 class="text-uppercase font-weight-bold">Reviews</h5>
@@ -82,6 +79,7 @@
 
   <div class="container mt-5">
     <h5 class="text-uppercase font-weight-bold">Write Your Review</h5>
+    
     {% if user.is_vendor or user.is_serviceprovider or user.is_rescue_service or user.is_vet%}
     <form class="review-form" method="POST" action="/marketplace/review/">
       <input type="hidden" name="prod_id" id="prod_id" value="{{product.id}}" />
@@ -136,6 +134,6 @@
     </div>
 
   </div>
-
+</section>
 
 {% endblock content %}

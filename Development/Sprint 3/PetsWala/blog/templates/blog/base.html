@@ -70,6 +70,9 @@
                     {% if user.is_vendor %}
                       <li class="nav-item"><a class="nav-link" href={% url 'add_product' %}> <i class="fas fa-user-alt mr-1 text-gray"></i>Add Product</a></li>
                     {% endif %}
+                    {% if user.is_vet %}
+                    <a class="dropdown-item border-0 transition-link" href="{% url 'vets_appointment_list' %}">Vet Appointments</a>
+                    {% endif %}
                   {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Sign Up</a></li>
@@ -80,6 +83,9 @@
           </nav>
         </div>
       </header>
+      <div style="padding:20px;">
+
+      </div>
 
       <body>
           {% block content %}{% endblock content %}

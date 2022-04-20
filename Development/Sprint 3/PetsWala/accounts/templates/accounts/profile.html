@@ -8,31 +8,33 @@
     <div class="container" >
       <div class="row py-4 px-2">
         <div class="col-lg-6 col-md-12">
-          <img class="img-fluid rounded" src="{{ image }}" alt="Profile pic" />  
+          <img class="rounded" src="{{ image }}" alt="Profile pic" width="400" height="400"/>  {% comment %}  add class="rounded-circle account-img" for round user profile picture {% endcomment %}
         </div>
         <div class="col-lg-6 col-md-12">
           <div class="presentation">
             <h4>{{whoami}}</h4>
             <h1>{{ name }}</h1>
-            <p>Description: {{info}}</p>
+            <p>
+              {{info}}
+            </p>
             <hr>
             
             <ul>
               <li>
                 <a href="mailto:{{email}}">
                   <i class="far fa-envelope"></i>
-                  {{email}}
+                  <p>{{email}}</p>
                 </a>
               </li>
               <li>
                 <a href="tel:{{phone_number}}"
                   ><i class="fas fa-phone"></i>
-                  {{phone_number}}
+                  <p>{{phone_number}}</p>
                 </a>
               </li>
             </ul>
             <a href="#updatediv">
-              <button class="btn btn-primary rounded shadow"  type="submit">Edit Information</button>
+              <button class="btn btn-primary rounded shadow"  type="submit">Update Information</button>
               </a>
           </div>
         </div>
@@ -40,7 +42,6 @@
     </div>
   </section>
   <!-- style=" padding:0px 0px 35px 0px; " -->
-  {% if whoami != "User" and whoami != "Vendor" %}
   <div class="container mt-5">
     <h5 class="text-uppercase font-weight-bold">Reviews</h5>
     <hr class="mt-0 pt-0">
@@ -73,7 +74,7 @@
     </div>
     <hr id="updatediv"> 
   </div>
-{% endif %}
+
   <section class="main_wrapper" >
     <div class="container"  >
       <div class="row py-4 px-2">

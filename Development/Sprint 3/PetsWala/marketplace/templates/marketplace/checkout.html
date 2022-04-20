@@ -15,7 +15,7 @@
                     <div class="md:grid md:grid-cols-3 gap-2 ">
                         <div class="col-span-2 p-5">
                             <h1 class="text-xl font-medium " style="margin-bottom: 20px">Address Details</h1>
-                            <form class="" action="{% url 'user_add_address' %} ?redirect=checkout" method="post">
+                            <form class="" action='{% url "user_add_address" %}?redirect=checkout' method="post">
                               {% csrf_token %}
                                 {{address_form|crispy}}
                                 <button type="submit" class = "btn btn-secondary" name="button">Update Address</button>
@@ -61,8 +61,7 @@
 
                     </div>
 
-                            <button style = "margin-top: 50px" class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600">
-                                <a href="/marketplace/order/complete" >Order Now! </a></button>
+                            <button style = "margin-top: 50px" class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600">Proceed to payment</button>
                         </div>
                     </div>
                 </div>
