@@ -35,10 +35,14 @@
               </li>
             </ul>
             {% if user.is_authenticated %}
-            <a href="/accounts/report/{{user.id}}/{{uid}}" class="btn btn-danger rounded shadow">
-              Report
-            </a>
-          {% endif %}
+              <a href="/accounts/report/{{uid}}" class="btn btn-danger rounded shadow">
+                Report
+              </a>
+            {% else %}
+              <a href="/login/?next=/accounts/report/{{uid}}" class="btn btn-danger rounded shadow">
+                Report
+              </a>
+            {% endif %}
           </div>
         </div>
       </div>

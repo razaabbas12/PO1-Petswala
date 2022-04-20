@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout,authenticate
 from django.views.generic import CreateView
@@ -8,6 +9,9 @@ from .models import ServiceProvider, User, Vendor, RescueServices, Vet, Review_a
 from .form import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -34,17 +38,25 @@ def register(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
+        image = request.FILES.get('image')
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        add_form=None
+        p_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        
+        prof = Profile.objects.filter(user=request.user).first()
+        if prof:
+            prof.image = image if image else prof.image
+            prof.save()
+        
+        add_form = None
         if request.user.is_serviceprovider:
-            add_form = ServiceUpdateForm(request.POST, instance=request.user.serviceprovider)
+            serv = ServiceProvider.objects.get(user=request.user)
+            add_form = ServiceUpdateForm(instance=serv)
         elif request.user.is_rescue_service:
-            add_form = RescueUpdateForm(request.POST, instance=request.user.rescueservice)
+            resuce = RescueServices.objects.get(user=request.user)
+            add_form = RescueUpdateForm(instance=resuce)
         elif request.user.is_vet:
-            add_form = VetUpdateForm(request.POST, instance=request.user.vet)
-        else:
-            pass
+            vet = Vet.objects.get(user=request.user)
+            add_form = VetUpdateForm(instance=vet)
             
         if u_form.is_valid() or p_form.is_valid():
             u_form.save()
@@ -59,11 +71,14 @@ def profile(request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
         add_form = None
         if request.user.is_serviceprovider:
-            add_form = ServiceUpdateForm(instance=request.user.serviceprovider)
+            serv = ServiceProvider.objects.get(user=request.user)
+            add_form = ServiceUpdateForm(instance=serv)
         elif request.user.is_rescue_service:
-            add_form = RescueUpdateForm(instance=request.user.rescueservice)
+            resuce = RescueServices.objects.get(user=request.user)
+            add_form = RescueUpdateForm(instance=resuce)
         elif request.user.is_vet:
-            add_form = VetUpdateForm(instance=request.user.vet)
+            vet = Vet.objects.get(user=request.user)
+            add_form = VetUpdateForm(instance=vet)
         
 
     prof = Profile.objects.filter(user=request.user).first()
@@ -186,7 +201,7 @@ def awaiting_confirmation(request):
 
 def getServiceProviders(request):
     if request.method == 'GET':
-        service_providers = ServiceProvider.objects.filter(is_approved=True).all()
+        service_providers = ServiceProvider.objects.filter(is_approved=True, user__is_serviceprovider=True).all()
         
         data = []
         for provider in service_providers:
@@ -260,7 +275,7 @@ def getservprofile(request, id):
 
 def getRescueProviders(request):
     if request.method == 'GET':
-        rescue_providers = RescueServices.objects.filter(is_approved=True).all()
+        rescue_providers = RescueServices.objects.filter(is_approved=True, user__is_rescue_service=True).all()
                 
         data = []
         for provider in rescue_providers:
@@ -272,7 +287,9 @@ def getRescueProviders(request):
                     "phone_num" : provider.user.phone_number,
                     "image" : profile.image.url,
                     "email" : provider.user.email,
-                    "profile_url" : f"/accounts/resque_profile/{provider.user.id}"
+                    "profile_url" : f"/accounts/resque_profile/{provider.user.id}",
+                    "uid" : provider.user.id,
+                    
                 }
                 
                 if not provider.user.is_blocked:
@@ -341,7 +358,7 @@ def getVets(request):
         data = []
         for vet in vets:
             try:
-                profile = Profile.objects.filter(user=vet.user).first()
+                profile = Profile.objects.filter(user=vet.user, user__is_vet=True).first()
                 obj = {
                     "name" : f"{vet.user.first_name} {vet.user.last_name}",
                     "experience" : vet.experience[:50]+"...",
@@ -442,12 +459,11 @@ def whoamilink(user_):
     else:
         return "User"
     
-def report_view(request, repotee_id, reported_id):
+def report_view(request, reported_id):
     if request.method=="GET":
         ted_user = User.objects.get(id=reported_id)
         
         context = {
-            "repotee": repotee_id,
             "reported": reported_id,
             "name": f"{ted_user.first_name} {ted_user.last_name}",
             "form": ReportForm,
@@ -457,14 +473,14 @@ def report_view(request, repotee_id, reported_id):
         
         return render(request,'accounts/report_init.html', context)
     elif request.method=="POST":
-        tee_user = User.objects.get(id=repotee_id)
+        tee_user = request.user
         ted_user = User.objects.get(id=reported_id)
         ted_prof = Profile.objects.get(user=ted_user)
         data = request.POST
         
         title=data.get('title')
         desc=data.get('description')
-        image=data.get('image')
+        image = request.FILES.get('image')
         role=whoami(ted_user)
         rep = Report(user=tee_user, reported=ted_prof, title=title, description=desc,image=image,role=role)
         rep.save()
@@ -472,13 +488,14 @@ def report_view(request, repotee_id, reported_id):
             "rep_id": rep.id
         }
         return render(request,'accounts/report_recived.html',context)
-    
-def request_rescue(request, requestee_id, requested_id):
+
+@csrf_exempt
+def request_rescue(request, requested_id):
     if request.method=="GET":
         ted_user = User.objects.get(id=requested_id)
         
         context = {
-            "requestee": requestee_id,
+            
             "requested": requested_id,
             "name": f"{ted_user.first_name} {ted_user.last_name}",
             "form": RequestForm,
@@ -487,17 +504,95 @@ def request_rescue(request, requestee_id, requested_id):
         return render(request,'accounts/request_rescue.html', context)
     
     elif request.method=="POST":
-        tee_user = User.objects.get(id=requestee_id)
+        data = request.POST
+        address = data.get("address", None)
+        lat = data.get("lat", None)
+        lng = data.get("lng", None)
+        
+        if not address or not lat or not lng:
+            return render(request,'accounts/address_required.html',{})
+        
+        ad = Address(address=address, lat=lat, lng=lng)
+        ad.save()
+        
+        tee_user = request.user
         ted_user = User.objects.get(id=requested_id)
         ted_prof = Profile.objects.get(user=ted_user)
-        data = request.POST
         
         title=data.get('title')
-        desc=data.get('description')
-        address=data.get('address')
-        req = Request(user=tee_user, requested=ted_prof, title=title, description=desc,address=address) 
+        desc=data.get('description')  
+        img = request.FILES.get('image')
+        
+        req = Request(user=tee_user, requested=ted_prof, title=title, description=desc,address=ad)
+        req.image = img
+        
         req.save()
+        
+        return render(request,'accounts/request_recv.html',{"id":req.id})
+    
+def getRescueRequests(request):
+    if request.method == 'GET':
+        user= request.user
+        
+        prof = Profile.objects.get(user=user)
+        requests = Request.objects.filter(requested=prof).all()
+        
         context = {
-            "req_id": req.id
+            "is_rescue" : user.is_rescue_service,
+            "requests": requests
         }
-        return render(request,'accounts/request_recv.html',context)
+        return render(request,'accounts/request_list.html',context)
+    
+def getRescueDetail(request, res_id):
+    if request.method == 'GET':
+        req = Request.objects.filter(id=res_id).first()
+    
+    elif request.method == 'POST':
+        data = request.POST
+        
+        status = data.get('status')
+        rescue_note = data.get('rescue_note')
+        resc_addr_lat = data.get('resc_addr_lat')
+        resc_addr_lng = data.get('resc_addr_lng')
+        print(data)
+        req = Request.objects.filter(id=res_id).first()
+        if req:
+            req.status = status if status else req.status
+            req.rescue_note = rescue_note if rescue_note else req.rescue_note
+            req.resc_addr_lat = resc_addr_lat if resc_addr_lat else req.resc_addr_lat
+            req.resc_addr_lng = resc_addr_lng if resc_addr_lng else req.resc_addr_lng
+            req.save()
+    
+    user = request.user
+    r_form = RequestRecuerForm(instance=req)
+    exists = bool(req) 
+    context = {
+        "is_rescue" : user.is_rescue_service,
+        "req": req,
+        "exist": exists,
+        "r_form": r_form
+    }
+    return render(request,'accounts/rescue_detail.html',context)
+
+def getRequestedRescue(request):
+    if request.method == 'GET':
+        user= request.user
+        
+        requests = Request.objects.filter(user=user).all()
+        
+        context = {
+            "requests": requests
+        }
+        return render(request,'accounts/requested_rescue_list.html',context)
+    
+def getRequestedDetail(request, res_id):
+    if request.method == 'GET':
+        req = Request.objects.filter(id=res_id).first()    
+        exists = bool(req) 
+        context = {
+            "req": req,
+            "exist": exists
+        }
+        return render(request,'accounts/requested_res_detail.html',context)
+    
+

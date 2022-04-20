@@ -7,13 +7,13 @@
 
 {% if user.is_authenticated %}
 <h3>Reporting <a href="/accounts/{{link}}/{{reported}}">{{name}}</a> ({{role}}):</h3>
-<form  method="POST" action="/accounts/report/{{repotee}}/{{reported}}">
+<form  method="POST" action="/accounts/report/{{reported}}" enctype='multipart/form-data'>
   {% csrf_token %}
   {{form|crispy}}
   <button type="submit" class="btn btn-primary rounded shadow">Submit</button>
 </form>
 {% else %}
-<p>You must be logged in to post the comment. <a href="{% url 'login'%}">Login Here</a></p>
+<p>You are not allowed here.</p>
 {% endif %}
 </section>
 {% endblock content%}

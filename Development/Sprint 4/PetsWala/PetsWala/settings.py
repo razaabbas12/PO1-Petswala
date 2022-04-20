@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     "django_pagination_bootstrap",
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [

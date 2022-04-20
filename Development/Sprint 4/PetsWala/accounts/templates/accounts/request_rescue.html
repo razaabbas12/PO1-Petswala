@@ -5,16 +5,48 @@
 
 <section class="main_wrapper">
 
-{% if user.is_authenticated %}
-<h3>Requesting Resque from <a href="/accounts/{{link}}/{{reported}}">{{name}}</a> </h3>
-<form  method="POST" action="/accounts/request/rescue/{{requestee}}/{{requested}}">
-  {% csrf_token %}
-  {{form|crispy}}
-  <button type="submit" class="btn btn-primary rounded shadow">Submit</button>
-</form>
+  {% if user.is_authenticated %}
+  <h3>Requesting Rescue from <a href="/accounts/{{link}}/{{requested}}">{{name}}</a> </h3>
 
-{% else %}
-<p>You must be logged in to post the comment. <a href="{% url 'login'%}">Login Here</a></p>
-{% endif %}
+  <form>
+    <input type="hidden" id="requestee" name="requestee" value="{{requestee}}" />
+    <input type="hidden" id="requested" name="requested" value="{{requested}}" />
+    <input type="hidden" id="csrf" name="csrf" value="{{csrf_token}}" />
+  </form>
+
+  <form method="POST" action="/accounts/request/rescue/{{requested}}" enctype='multipart/form-data'>
+    {{ form|crispy }}
+    <input type="hidden" id="addresss" name="address" minlength="6" required>
+    <input type="hidden" id="lat" name="lat" required>
+    <input type="hidden" id="lng" name="lng" required>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-primary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" onclick="toogleInput()">Enter Address
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option2" autocomplete="off" onclick="toogleInput()">Select Pin Location
+      </label>
+    </div>
+
+    <div id="toggleOptionsHtml">
+      <p>Select An Option from Above.</p>
+    </div>
+    <button class="btn btn-primary rounded shadow mt-3">Submit</button>
+  </form>
+  <style>
+    #map {
+      width: 500px;
+      height: 400px;
+    }
+  </style>
+
+
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3ALwqrIwXFt9C8iGfrBXxUkLYV-Uiccg&callback=initMap&libraries=places"></script>
+  <script src="/static/blog/js/pin_location.js"></script>
+
+  {% else %}
+  <p>You must be logged in to request Rescue. <a href="/login/?next=/accounts/request/rescue/{{requested}}">Login Here</a></p>
+  {% endif %}
 </section>
 {% endblock content%}

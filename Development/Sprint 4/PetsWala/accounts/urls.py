@@ -19,7 +19,11 @@ urlpatterns=[
     path('vets',views.vets.as_view(), name='vets'),
     path('vets/list/',views.getVets, name='vets_list'),
     path('review/', views.Review_rate, name='review-rate'),
-    path('report/<int:repotee_id>/<int:reported_id>', views.report_view, name="reports"),
-    path('request/rescue/<int:requestee_id>/<int:requested_id>', views.request_rescue, name="request-rescue")
-    
+    path('report/<int:reported_id>', views.report_view, name="reports"),
+    path('request/rescue/<int:requested_id>', views.request_rescue, name="request-rescue"),
+    path('request/rescue/list', views.getRescueRequests, name="request-rescue-list"),
+    path('rescue/detail/<int:res_id>', views.getRescueDetail, name='rescue-details'),
+    path('requested/rescue/list', views.getRequestedRescue, name='requested-rescue-list'),
+    path('requested/rescue/detail/<int:res_id>', views.getRequestedDetail, name='requested-rescue-details'),
+
 ]

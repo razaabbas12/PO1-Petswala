@@ -3,13 +3,12 @@
 
 <section class="main_wrapper">
 <h3>
-  Your resque request has been submitted.
+  Your rescue request has been submitted.
 </h3>
-<p>
-  Admin will review your report and act accordingly.
+<p> 
+  Your rescue id is <strong>{{id}}</strong> for future references.
 </p>
-<a href="/">
-<p>Go to Home Page</p>
-</a>
+<a class="btn btn-primary rounded shadow" href="/accounts/requested/rescue/detail/{{id}}">View more details</a>
+<a class="btn btn-primary rounded shadow" href="/">Go to Home Page</a>
 </section>
 {% endblock content%}

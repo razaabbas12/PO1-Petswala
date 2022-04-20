@@ -1,13 +1,14 @@
 from django.contrib import admin, messages
-from .models import RescueServices, ServiceProvider, User, Vendor, Profile, Vet, Review_acc, Report
+from .models import *
 from .email_service import send_service_provider_approved_email,send_rescue_service_approved_email, send_vets_approved_email, send_blocked_email
 
 # Register your models here.
 
 admin.site.register(User)
 admin.site.register(Vendor)
-admin.site.register(Profile)
 admin.site.register(Review_acc)
+admin.site.register(Request)
+admin.site.register(Address)
 
 # Service Provider Admin Actions
 @admin.action(description='Approve Selected Service Providers')
@@ -108,3 +109,8 @@ class ReportAdmin(admin.ModelAdmin):
   actions = [Block_reported]
 
 admin.site.register(Report, ReportAdmin)
+
+class ProfileAdmin(admin.ModelAdmin):
+  list_display = [str, 'user_id']
+
+admin.site.register(Profile, ProfileAdmin)

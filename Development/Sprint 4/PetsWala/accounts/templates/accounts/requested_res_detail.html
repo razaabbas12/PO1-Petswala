@@ -1,0 +1,100 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+<style>
+  #map {
+    width: 500px;
+    height: 400px;
+  }
+</style>
+<section class="main_wrapper">
+  {% if not exist%}
+  <p><strong>Rescue Request does not exist!</strong></p>
+  {% else %}
+  <div class="container">
+    <div class="text-center">
+      <h2>Title: {{req.title}}</h2>
+    </div>
+    <div class="row">
+      {% if req.image %}
+      <div class="col-lg-6 col-md-12 py-4">
+        <div class="owl-carousel product-slider" data-slider-id="1">
+          <a class="d-block" href={{req.image.url}} data-lightbox="product" title={{req.title}}>
+            <img class="img-fluid rounded" style="max-height: 20rem;" src="{{req.image.url}}"
+              onerror="this.src='https://i.ibb.co/n1Gy4Gq/No-Image-Available.jpg'" />
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-lg-6 col-md-12 py-4">
+        <div class="">
+          <img class="img-fluid rounded" style="max-height: 20rem;"
+            src="https://i.ibb.co/n1Gy4Gq/No-Image-Available.jpg" />
+
+        </div>
+      </div>
+      {% endif %}
+      <div class="col-lg-6 col-md-12">
+        <div class="presentation py-4">
+
+          <p class="text-medium"><strong>Description:</strong> {{req.description}}</p>
+          <p class="text-medium"><strong>Address:</strong> {{req.address.address}}</p>
+          <p class="text-medium"><strong>Phone#:</strong> {{req.requested.user.phone_number}}</p>
+          <div class="">
+            <p><strong>From Rescuer:</strong></p>
+            <p class="text-medium m-2">
+              <strong>Status: </strong>
+              {{req.status}}
+            </p>
+            <p class="text-medium m-2">
+              <strong>Note: </strong>
+              {{req.rescue_note}}
+            </p>
+            <p class="text-muted text-medium m-2">
+              Updated: {{req.update_at|naturaltime}}
+            </p>
+          </div>
+          <a class="btn btn-info my-2 rounded shadow my-4"
+            href="https://maps.google.com/?q={{req.resc_addr_lat}},{{req.resc_addr_lng}}" target="_blank">Get Direction
+            To Rescuer's Latest Location</a>
+
+
+        </div>
+      </div>
+
+    </div>
+    <p class="pt-2 my-3"><strong> Rescuer's Last Updated Location:</strong></p>
+    <div class="rounded shadow" id="map"></div>
+
+
+  </div>
+  <input type="hidden" id="resc_addr_lat" name="resc_addr_lat" value="{{req.resc_addr_lat}}">
+  <input type="hidden" id="resc_addr_lng" name="resc_addr_lng" value="{{req.resc_addr_lng}}">
+  {% endif %}
+</section>
+
+<script>
+  var lat = parseFloat(document.getElementById('resc_addr_lat').value);
+  var lng = parseFloat(document.getElementById('resc_addr_lng').value);
+  function initMap() {
+    const uluru = { lat: lat, lng: lng };
+    let el = document.getElementById("map");
+    const map = new google.maps.Map(el, {
+      zoom: 13,
+      center: uluru,
+    });
+    marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+      icon: "https://i.ibb.co/pQ46YP8/icons8-standing-man-64.png"
+    });
+  }
+  initMap();
+</script>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3ALwqrIwXFt9C8iGfrBXxUkLYV-Uiccg&callback=initMap&libraries=places"></script>
+
+
+{% endblock content %}

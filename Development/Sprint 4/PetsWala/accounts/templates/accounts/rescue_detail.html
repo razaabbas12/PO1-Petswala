@@ -1,0 +1,71 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+<section class="main_wrapper">
+  {% if not exist%}
+  <p>Rescue Request does not exist!</p>
+  {% else %}
+  <div class="container">
+    <div class="text-center">
+      <h2>Title: {{req.title}}</h2>
+    </div>
+    <div class="row">
+      {% if req.image %}
+      <div class="col-lg-6 col-md-12 py-4">
+        <div class="owl-carousel product-slider" data-slider-id="1">
+          <a class="d-block" href={{req.image.url}} data-lightbox="product" title={{req.title}}>
+            <img class="img-fluid rounded" style="max-height: 20rem;" src="{{req.image.url}}"
+              onerror="this.src='https://i.ibb.co/n1Gy4Gq/No-Image-Available.jpg'" />
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-lg-6 col-md-12 py-4">
+        <div class="">
+          <img class="img-fluid rounded" style="max-height: 20rem;"
+            src="https://i.ibb.co/n1Gy4Gq/No-Image-Available.jpg" />
+
+        </div>
+      </div>
+      {% endif %}
+      <div class="col-lg-6 col-md-12">
+        <div class="presentation py-4">
+          <p class="text-medium"><strong>Description:</strong> {{req.description}}</p>
+          <p class="text-medium"><strong>Address:</strong> {{req.address.address}}</p>
+          <p class="text-medium"><strong>Phone#</strong> {{req.user.phone_number}}</p>
+          <form method="POST" action="">
+            {% csrf_token %}
+            {{ r_form|crispy }}
+            <input type="hidden" id="resc_addr_lat" name="resc_addr_lat" value="{{req.resc_addr_lat}}">
+            <input type="hidden" id="resc_addr_lng" name="resc_addr_lng" value="{{req.resc_addr_lng}}">
+            <p class="text-medium"> Clicking Update will update your location too.</p>
+            <p class="text-muted text-medium">
+              Updated: {{req.update_at|naturaltime}}
+            </p>
+            <button type="submit" class="btn btn-primary rounded shadow">Update</button>
+          </form>
+          <a class="btn btn-info rounded shadow my-2"
+            href="https://maps.google.com/?q={{req.address.lat}},{{req.address.lng}}" target="_blank">Get Direction</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+<script>
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(setPosition);
+  }
+
+  function setPosition(pos) {
+    document.getElementById('resc_addr_lat').value = pos.coords.latitude;
+    document.getElementById('resc_addr_lng').value = pos.coords.longitude;
+  }
+
+</script>
+
+
+{% endblock content %}

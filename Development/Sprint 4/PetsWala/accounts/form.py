@@ -204,9 +204,13 @@ class ReportForm(forms.ModelForm):
 
 class RequestForm(forms.ModelForm):
     class Meta:
-        model = Address
-        fields = ['address','geolocation']
-        depth = 1
+        model = Request
+        fields = ['title','description','image']
+        
+class RequestRecuerForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ['status','rescue_note']
 
 
 class AddNewProduct(forms.ModelForm):         #Implement add_product form here
@@ -273,6 +277,7 @@ class AddNewProduct(forms.ModelForm):         #Implement add_product form here
         product.thumbnail = self.cleaned_data.get('thumbnail')
         product.save()
         return product
+
 
 # class AddNewPost(forms.ModelForm):
 #     class Meta:

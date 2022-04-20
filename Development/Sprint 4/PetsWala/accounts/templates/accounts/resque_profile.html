@@ -35,10 +35,22 @@
               </li>
             </ul>
             {% if user.is_authenticated %}
-            <a href="/accounts/report/{{user.id}}/{{uid}}" class="btn btn-danger rounded shadow">
+            <a href="/accounts/request/rescue/{{uid}}" class="btn btn-primary rounded shadow">
+              Request Rescue
+            </a>
+            <a href="/accounts/report/{{uid}}" class="btn btn-danger rounded shadow">
               Report
             </a>
-          {% endif %}
+            {% else %}
+            <a href="/login/?next=/accounts/request/rescue/{{uid}}" class="my-2 btn btn-primary rounded shadow">
+              Request Rescue
+            </a>
+            <a href="/login/?next=/accounts/report/{{uid}}" class="btn btn-danger rounded shadow">
+              Report
+            </a>
+            {% endif %}
+            
+            
           </div>
         </div>
       </div>
