@@ -395,6 +395,8 @@ def getVetProfile(request, id):
         
         profreview =Profile.objects.get(user=user)
         review = Review_acc.objects.filter(profile=profreview).all()
+
+        appointment = Vet_appointment.objects.get(user=vet)
         
         reviews = []
         for one in review:
@@ -417,6 +419,7 @@ def getVetProfile(request, id):
             context["uid"] = user.id
             context["url"] = "vet_profile"
             context["reviews"] = reviews
+            context["appointment"] = appointment
         else:
             context['exist'] = False
     else:
