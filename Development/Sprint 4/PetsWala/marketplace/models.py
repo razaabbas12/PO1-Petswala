@@ -72,6 +72,13 @@ class Review(models.Model):
         return str(self.id)
 
 
+STATUS_CHOICES = (
+    ("Pending", "Pending"),
+    ("Started", "Started"),
+    ("Abanodned", "Abandoned"),
+    ("Finished", "Finished"),
+)
+
 class CartItem(models.Model):
     cart = models.ForeignKey('Cart', models.CASCADE, null = True, blank = True)
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
@@ -81,6 +88,7 @@ class CartItem(models.Model):
     timestamp = models.DateTimeField(auto_now_add = True, auto_now = False)
     updated = models.DateTimeField(auto_now_add = False, auto_now = True)
     line_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
+    status = models.CharField(max_length = 120, choices = STATUS_CHOICES, default = "Pending")
 
     def __str__(self):
         try:
@@ -103,22 +111,17 @@ class Cart(models.Model):
     def __str__(self):
         return "Cart id: %s" %(self.id)
 
-STATUS_CHOICES = (
-    ("started", "Started"),
-    ("Abanodned", "Abandoned"),
-    ("Finished", "Finished"),
-)
 
 class Order(models.Model):
     user = models.ForeignKey(User, blank = True, null = True, on_delete = models.CASCADE)
-    address = models.CharField(max_length = 50, default = '{user.address}')
-    city = models.CharField(max_length = 20, default = 'ABC')
+    address = models.CharField(max_length = 120, default = '{user.address}')
+    city = models.CharField(max_length = 50, default = 'ABC')
     sub_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     final_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     tax_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     order_id = models.CharField(max_length = 120, default = 'ABC')
     cart = models.ForeignKey(Cart, on_delete = models.CASCADE)
-    status = models.CharField(max_length = 120, choices = STATUS_CHOICES, default = "Started")
+    status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = "Started")
     timestamp = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now_add = False, auto_now = True)
 

@@ -220,6 +220,7 @@ def order_complete(request):
 
 
 def view_orders(request):
+    
     template = 'marketplace/view_orders.html'
     vendor_orders = CartItem.objects.filter(vendor = request.user.username)
     # users = User.objects.filter(username = vendor_orders.user)

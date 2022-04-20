@@ -40,6 +40,19 @@
                     <small class="text-muted">Qty: {{ order.quantity }}</small><br>
                     <small class="text-muted">Total Price: {{ order.line_total }}</small><br>
                     <small class="text-muted">Ship to: {{ order.user.address }}</small><br>
+                    <small class="text-muted">Status: {{ order.status }}</small><br>
+                    <form method="POST" >
+                        {% csrf_token %}
+                        <input type="text" list="status" name="status">
+                            <datalist id="status">
+                                <option value="Pending">
+                                <option value="Started">
+                                <option value="Finshed">
+                                <option value="Abandoned">
+                            </datalist>
+                        <input type="submit" value="Update Status">
+
+                    </form>
                     {% comment %} <small class="text-muted">Order ID: {{  }}</small><br> {% endcomment %}
                     {% comment %} <toggle >Status: {{ status }}</toggle> {% endcomment %}
                     {% comment %} <small class="text-muted">Order ID: {{ order.order_id }}</small> {% endcomment %}
