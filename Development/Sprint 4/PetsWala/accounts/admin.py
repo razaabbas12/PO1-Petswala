@@ -10,6 +10,7 @@ admin.site.register(Review_acc)
 admin.site.register(Request)
 admin.site.register(Address)
 admin.site.register(Vet_appointment)
+admin.site.register(Service_appointment)
 
 # Service Provider Admin Actions
 @admin.action(description='Approve Selected Service Providers')

@@ -242,6 +242,8 @@ def getservprofile(request, id):
         
         profreview =Profile.objects.get(user=user)
         review = Review_acc.objects.filter(profile=profreview).all()
+
+        appointment = Service_appointment.objects.get(user=service_provider)
         
         reviews = []
         for one in review:
@@ -265,6 +267,7 @@ def getservprofile(request, id):
             context["uid"] = user.id
             context["url"] = "service_profile"
             context["reviews"] = reviews
+            context["appointment"] = appointment
         else:
             context['exist'] = False
     else:
@@ -567,6 +570,146 @@ def getVetAppointmentList(request):
         }
 
         return render(request, 'accounts/vet_appointment_list.html', context)
+
+
+def getServiceAppointment(request, id):
+
+    user =User.objects.filter(id=id).first()
+    sp = ServiceProvider.objects.filter(user=user).first()
+    sp_app = Service_appointment.objects.filter(user=sp)
+
+    if request.method == "POST":
+        your_name = request.POST['your-name']
+        your_phone = request.POST['your-phone']
+        your_email = request.POST['your-email']
+        your_address = request.POST['your-address']
+        your_schedule = request.POST.get("a")
+        your_message = request.POST['your-message']
+        your_sp = user.username
+
+        if your_schedule=="m1":
+            sp_app.update(m1=True)  
+            your_name = "WORKING m1"
+            appointment = "Name : " + your_name + "Phone : " + your_phone + "Email : " + your_email + "Address: " + your_address + "Time: " + your_schedule + "Day: " + "Message : " + your_message
+
+        elif your_schedule=="m2":
+            sp_app.update(m2=True)
+            your_name = "WORKING m2"
+        
+        elif your_schedule=="m3":
+            sp_app.update(m3=True)
+            your_name = "WORKING m3"
+
+        elif your_schedule=="m4":
+            sp_app.update(m4=True)
+            your_name = "WORKING m4"
+
+        elif your_schedule=="t1":
+            sp_app.update(t1=True)  
+            your_name = "WORKING t1"
+            appointment = "Name : " + your_name + "Phone : " + your_phone + "Email : " + your_email + "Address: " + your_address + "Time: " + your_schedule + "Day: " + "Message : " + your_message
+
+        elif your_schedule=="t2":
+            sp_app.update(t2=True)
+            your_name = "WORKING t2"
+        
+        elif your_schedule=="t3":
+            sp_app.update(t3=True)
+            your_name = "WORKING t3"
+
+        elif your_schedule=="t4":
+            sp_app.update(t4=True)
+            your_name = "WORKING t4"
+
+        elif your_schedule=="w1":
+            sp_app.update(w1=True)  
+            your_name = "WORKING w1"
+            appointment = "Name : " + your_name + "Phone : " + your_phone + "Email : " + your_email + "Address: " + your_address + "Time: " + your_schedule + "Day: " + "Message : " + your_message
+
+        elif your_schedule=="w2":
+            sp_app.update(w2=True)
+            your_name = "WORKING w2"
+        
+        elif your_schedule=="w3":
+            sp_app.update(w3=True)
+            your_name = "WORKING w3"
+
+        elif your_schedule=="w4":
+            sp_app.update(w4=True)
+            your_name = "WORKING w4"
+
+        elif your_schedule=="th1":
+            sp_app.update(th1=True)  
+            your_name = "WORKING th1"
+            appointment = "Name : " + your_name + "Phone : " + your_phone + "Email : " + your_email + "Address: " + your_address + "Time: " + your_schedule + "Day: " + "Message : " + your_message
+
+        elif your_schedule=="th2":
+            sp_app.update(th2=True)
+            your_name = "WORKING th2"
+        
+        elif your_schedule=="th3":
+            sp_app.update(th3=True)
+            your_name = "WORKING th3"
+
+        elif your_schedule=="th4":
+            sp_app.update(th4=True)
+            your_name = "WORKING th4"
+
+        elif your_schedule=="f1":
+            sp_app.update(f1=True)  
+            your_name = "WORKING f1"
+            appointment = "Name : " + your_name + "Phone : " + your_phone + "Email : " + your_email + "Address: " + your_address + "Time: " + your_schedule + "Day: " + "Message : " + your_message
+
+        elif your_schedule=="f2":
+            sp_app.update(f2=True)
+            your_name = "WORKING f2"
+        
+        elif your_schedule=="f3":
+            sp_app.update(f3=True)
+            your_name = "WORKING f3"
+
+        elif your_schedule=="f4":
+            sp_app.update(f4=True)
+            your_name = "WORKING f4"
+
+        else:
+            appointment = "NOT WORKING"
+            your_name = "NOT WORKING"
+            
+
+
+        
+        # send_mail(
+        #     'Appointment Request',
+        #     appointment,
+        #     your_email,
+        #     user.email,
+        # )
+
+        return render(request, 'accounts/sp_appointment.html', {
+            'your_name': your_name,
+            'your_phone' : your_phone,
+            'your_email' : your_email,
+            'your_address' : your_address,
+            'your_schedule' : your_schedule,
+            'your_message' : your_message,
+            'your_vet' : your_sp
+        })
+
+def getServiceAppointmentList(request):
+    if request.method == 'GET':
+
+        user = request.user
+        sp = ServiceProvider.objects.get(user=user)
+
+        sp_appointments = Service_appointment.objects.get(user=sp)
+
+        context = {
+            "is_serviceprovider": user.is_serviceprovider,
+            "sp_appointments": sp_appointments
+        }
+
+        return render(request, 'accounts/sp_appointment_list.html', context)
 
 
 
