@@ -1,5 +1,5 @@
 from django.contrib import admin, messages
-from .models import RescueServices, ServiceProvider, User, Vendor, Profile, Vet, Review_acc, Report
+from .models import RescueServices, ServiceProvider, User, Vendor, Profile, Vet, Review_acc, Report, Vet_appointment
 from .email_service import send_service_provider_approved_email,send_rescue_service_approved_email, send_vets_approved_email
 
 # Register your models here.
@@ -8,6 +8,7 @@ admin.site.register(User)
 admin.site.register(Vendor)
 admin.site.register(Profile)
 admin.site.register(Review_acc)
+admin.site.register(Vet_appointment)
 
 # Service Provider Admin Actions
 @admin.action(description='Approve Selected Service Providers')

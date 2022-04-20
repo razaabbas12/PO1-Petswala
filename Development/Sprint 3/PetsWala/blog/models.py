@@ -22,7 +22,7 @@ class Post(models.Model):                                                   #Blo
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     name = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField(max_length=500)
+    body = models.TextField(blank=True ,null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

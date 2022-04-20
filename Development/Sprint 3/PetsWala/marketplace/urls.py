@@ -10,7 +10,5 @@ urlpatterns=[
     path('cart/', viewCart, name='cart'),
     path('checkout/', checkout, name='checkout'),
     path('user_add_address/', user_add_address, name='user_add_address'),
-    path('order/complete', order_complete, name='order_complete'),
-    
     
 ]
