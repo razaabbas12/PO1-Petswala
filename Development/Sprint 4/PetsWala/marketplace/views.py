@@ -1,3 +1,4 @@
+from urllib.request import Request
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, Http404
 from .models import *
 from .utils import id_generator
@@ -112,7 +113,7 @@ def update_cart(request, id):
         pass
     except:
         pass
-    cart_item, created = CartItem.objects.get_or_create(cart = cart, product = product, vendor = product.vendor.user.username, user = request.user)
+    cart_item, created = CartItem.objects.get_or_create(cart = cart, product = product, vendor = product.vendor.user.username, user = request.user, cartID = cart.id)
     if created:
         print("yeah")
     if int(qty) == 0 and update_qty:
@@ -185,34 +186,7 @@ def checkout(request):
     template = 'marketplace/checkout.html'
     return render(request, template, context)
 
-# def user_add_address(request):
-#     try:
-#         redirect = request.GET.get("redirect")
-#     except:
-#         redirect = None
-#     if request.method == 'POST':
-#         form = UserAddressForm(request.POST)
-#         inst = UserAddress.objects.get(user = request.user)
-#         inst.address = request.POST.get('address')
-#         inst.address2 = request.POST.get('address2')
-#         inst.city = request.POST.get('city')
-#         inst.state = request.POST.get('state')
-#         inst.country = request.POST.get('country')
-#         inst.zipcode= request.POST.get('zipcode')
-#         inst.phone_number = request.POST.get('phone_number')
-#         billing = request.POST.get('billing')
-#         if billing == None:
-#             inst.billing = False
-#         else:
-#             inst.billing = True
-#         inst.save()
-#         if form.is_valid():
-#             form = UserAddressForm(request.POST, request.FILES, instance=request.user)
-#             form.save()
-#             if redirect is not None:
-#                 return HttpResponseRedirect(reverse(str(redirect)))
-#         else:
-#             raise Http404
+
         
 def order_complete(request):
     template = 'marketplace/order-comlete.html'
@@ -220,7 +194,22 @@ def order_complete(request):
 
 
 def view_orders(request):
-    
+    if request.method == 'POST':
+        
+        u_status = request.POST.get('status')       #updated status from the form
+        
+        cID = request.POST.get('cartID')            #cart ID from the form, needed to specify which cart item status to change
+        
+        cart = Cart.objects.get(id=cID)             #getting the cart using the cart ID
+
+        cartItems = CartItem.objects.filter(vendor=request.user.username, cart=cart)        #getting the cart item using the cart
+        for object in cartItems:
+            if ((u_status == "Pending") or (u_status == "Started") or (u_status == "Finished") or (u_status == "Abandoned")):       #To validate status change form input
+                object.status = u_status
+                object.save()
+            
+        
+
     template = 'marketplace/view_orders.html'
     vendor_orders = CartItem.objects.filter(vendor = request.user.username)
     # users = User.objects.filter(username = vendor_orders.user)

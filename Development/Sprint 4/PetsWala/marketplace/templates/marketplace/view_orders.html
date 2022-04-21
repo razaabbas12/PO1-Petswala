@@ -35,21 +35,24 @@
                     <div class="article-metadata">
                     <div class="mr-2" >Username: {{ order.user.username }}</div>
                     {% comment %} <small class="text-muted">Posted on: {{ order.timestamp|date:"F d, Y" }}</small> {% endcomment %}
+                    <small class="text-muted">{{ order.cart }}</small><br>
                     <small class="text-muted">Posted on: {{ order.timestamp }}</small><br>
                     <small class="text-muted">Product: {{ order.product }}</small><br>
                     <small class="text-muted">Qty: {{ order.quantity }}</small><br>
                     <small class="text-muted">Total Price: {{ order.line_total }}</small><br>
                     <small class="text-muted">Ship to: {{ order.user.address }}</small><br>
                     <small class="text-muted">Status: {{ order.status }}</small><br>
-                    <form method="POST" >
+                    <form method="POST">
                         {% csrf_token %}
-                        <input type="text" list="status" name="status">
+                        <input type="select" list="status" name="status" required>
                             <datalist id="status">
                                 <option value="Pending">
                                 <option value="Started">
-                                <option value="Finshed">
+                                <option value="Finished">
                                 <option value="Abandoned">
                             </datalist>
+                        
+                        <input type="text" name="cartID" value="{{ order.cart.id }}" hidden>
                         <input type="submit" value="Update Status">
 
                     </form>

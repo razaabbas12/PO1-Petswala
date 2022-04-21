@@ -75,13 +75,26 @@ class Review(models.Model):
 STATUS_CHOICES = (
     ("Pending", "Pending"),
     ("Started", "Started"),
-    ("Abanodned", "Abandoned"),
+    ("Abandoned", "Abandoned"),
     ("Finished", "Finished"),
 )
 
+
+
+class Cart(models.Model):
+    # user = models.ForeignKey(User, models.CASCADE)
+    total = models.DecimalField(max_digits = 100, decimal_places = 2, default = 0.0)
+    timestamp = models.DateTimeField(auto_now_add = True, auto_now = False)
+    updated = models.DateTimeField(auto_now_add = False, auto_now = True)
+    active = models.BooleanField(default = True)
+
+    def __str__(self):
+        return "Cart id: %s" %(self.id)
+
 class CartItem(models.Model):
-    cart = models.ForeignKey('Cart', models.CASCADE, null = True, blank = True)
-    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, default=0)
+    cartID = models.CharField(max_length=255, default='ABC')
+    product = models.ForeignKey(Product, blank = True, null = True, on_delete = models.CASCADE, )
     user = models.ForeignKey(User, on_delete = models.CASCADE, default=1)
     vendor = models.CharField(max_length=255, default='ABC')
     quantity = models.IntegerField(default = 1)
@@ -101,27 +114,16 @@ class CartItem(models.Model):
         line_total = float(self.product.price) * float(self.quantity)
         return round(line_total, 2)
 
-class Cart(models.Model):
-    # user = models.ForeignKey(User, models.CASCADE)
-    total = models.DecimalField(max_digits = 100, decimal_places = 2, default = 0.0)
-    timestamp = models.DateTimeField(auto_now_add = True, auto_now = False)
-    updated = models.DateTimeField(auto_now_add = False, auto_now = True)
-    active = models.BooleanField(default = True)
-
-    def __str__(self):
-        return "Cart id: %s" %(self.id)
-
-
 class Order(models.Model):
     user = models.ForeignKey(User, blank = True, null = True, on_delete = models.CASCADE)
-    address = models.CharField(max_length = 120, default = '{user.address}')
+    address = models.CharField(max_length = 120, default = "{user.address}")
     city = models.CharField(max_length = 50, default = 'ABC')
     sub_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     final_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     tax_total = models.DecimalField(default = 0.0, max_digits = 1000, decimal_places = 2, null = True, blank = True)
     order_id = models.CharField(max_length = 120, default = 'ABC')
     cart = models.ForeignKey(Cart, on_delete = models.CASCADE)
-    status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = "Started")
+    status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = "Pending")
     timestamp = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now_add = False, auto_now = True)
 
