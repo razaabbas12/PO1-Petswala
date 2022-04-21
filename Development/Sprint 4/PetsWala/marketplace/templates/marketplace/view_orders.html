@@ -40,7 +40,7 @@
                     <small class="text-muted">Product: {{ order.product }}</small><br>
                     <small class="text-muted">Qty: {{ order.quantity }}</small><br>
                     <small class="text-muted">Total Price: {{ order.line_total }}</small><br>
-                    <small class="text-muted">Ship to: {{ order.user.address }}</small><br>
+                    <small class="text-muted">Ship to: {{ order.user.address }}, {{ order.user.city }}</small><br>
                     <small class="text-muted">Status: {{ order.status }}</small><br>
                     <form method="POST">
                         {% csrf_token %}

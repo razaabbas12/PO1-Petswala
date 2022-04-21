@@ -277,21 +277,3 @@ class AddNewProduct(forms.ModelForm):         #Implement add_product form here
         product.thumbnail = self.cleaned_data.get('thumbnail')
         product.save()
         return product
-
-
-# class AddNewPost(forms.ModelForm):
-#     class Meta:
-#         model = Post
-#         fields = ['title', 'content']
-
-#         widgets={
-#             'title': forms.TextInput(attrs={
-#                 "class": "form-control",
-#                 "placeholder": "Enter Post Title here..."
-#             }),
-#             'content': forms.Textarea(attrs={
-#                 "class": "form-control",
-#                 "placeholder": "Enter Post Description here...",
-#                 "rows": 4
-#             }),
-#             }

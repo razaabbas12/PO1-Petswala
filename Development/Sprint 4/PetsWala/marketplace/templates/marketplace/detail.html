@@ -32,6 +32,7 @@
                       </div>
                   </div>
                 </div>
+                {% if not (user.is_rescue_service or user.is_serviceprovider or user.is_vendor or user.is_vet) %}
                 <div class="col-sm-3 pl-sm-0"><button
                   class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0 rounded"
                   type="submit" name="button">Add to cart</button></div>

@@ -80,32 +80,26 @@
                 {% comment %} <li class="nav-item"><a class="nav-link" href="#"> <i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small class="text-gray">(0)</small></a></li> {% endcomment %}
                   {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Profile</a></li>
+                    
                     {% if user.is_vet %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'vets_appointment_list' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i> Vet Appointments</a></li>
-                    {% endif %}
-                    {% if user.is_serviceprovider %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'sp_appointment_list' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i> Service Appointments</a></li>
-                    {% endif %}
-                    {% if not user.is_rescue_service %}
-                      <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Cart</a></li>
-                      <li class="nav-item"><a class="nav-link" href="{% url 'checkout'%}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Checkout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'vets_appointment_list' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Appointments</a></li>
+                    
+                    {% elif user.is_serviceprovider %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'sp_appointment_list' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Appointments</a></li>
+                    
+                   
                     {% elif user.is_rescue_service %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'request-rescue-list' %}"> <i class="fa fa-plus-square mr-1 text-gray"></i>Rescue Requests</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'request-rescue-list' %}"> <i class="fa fa-plus-square mr-1 text-gray"></i>Requests</a></li>
+                    
 
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-cart mr-1 text-gray"></i>Cart</a>
-                      <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown"><a class="dropdown-item border-0 transition-link" href="{% url 'cart'%}"><i class="fa fa-shopping-cart mr-1 text-gray"></i>Cart</a><a class="dropdown-item border-0 transition-link" href="{% url 'checkout'%}"><i class="fa fa-shopping-cart mr-1 text-gray"></i>Checkout</a></div>
-                    </li>
-
-
-
-                    {% endif %}
-                    {% if user.is_vendor %}
+                    {% elif user.is_vendor %}
                       <li class="nav-item"><a class="nav-link" href={% url 'add_product' %}> <i class="fas fa-user-alt mr-1 text-gray"></i>Add Product</a></li>
                       <li class="nav-item"><a class="nav-link" href="{% url 'view_orders' %}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Orders</a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}"> <i class="fa fa-shopping-cart mr-1 text-gray"></i>Cart</a></li>
                     {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Logout</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Logout</a></li>
+                    
                   {% else %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"> <i class="fas fa-user-alt mr-1 text-gray"></i>Sign Up</a></li>
