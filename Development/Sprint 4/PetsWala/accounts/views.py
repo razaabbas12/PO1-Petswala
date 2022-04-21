@@ -4,8 +4,7 @@ from django.contrib.auth import login, logout,authenticate
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
-
-from marketplace.models import Product
+from marketplace.models import *
 from .models import *
 from .form import *
 from django.contrib import messages
@@ -35,6 +34,30 @@ def register(request):
     
 
     # return render(request, 'accounts/add_new_product.html', context)
+
+@login_required
+def my_orders(request):
+
+
+    template = 'accounts/my_orders.html'
+
+
+    carts = Cart.objects.filter(active=True)
+    my_orders = []
+    for object in carts:
+        try:
+            my_orders.append(CartItem.objects.get(user = request.user, cart=object))
+        except:
+            continue
+
+
+
+    # my_orders = CartItem.objects.filter(user = request.user)
+    context={
+        'orders': my_orders,
+        # 'status': 
+    }
+    return render(request, template, context)
 
 @login_required
 def profile(request):
