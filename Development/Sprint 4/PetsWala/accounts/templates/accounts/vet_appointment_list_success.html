@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% if is_vet %}
+<div class="container" style="padding-bottom: 7%;">
+  <div class="text-center h2" style="padding-top: 2%;">
+    Appointment Requests
+  </div>
+
+  <h1>
+      Appointments for Completed Successfully
+  </h1>
+
+  <a href="{% url 'vets_appointment_list' %}">Back to List</a>
+
+  
+  
+
+  
+</div>
+
+
+{%else%}
+<div class="main_wrapper">
+  <p>You are not a rescue provider.</p>
+</div>
+{%endif%}
+{% endblock content %}
