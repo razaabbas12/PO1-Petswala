@@ -86,7 +86,7 @@ class Cart(models.Model):
     total = models.DecimalField(max_digits = 100, decimal_places = 2, default = 0.0)
     timestamp = models.DateTimeField(auto_now_add = True, auto_now = False)
     updated = models.DateTimeField(auto_now_add = False, auto_now = True)
-    active = models.BooleanField(default = True)
+    active = models.BooleanField(default = False)
 
     def __str__(self):
         return "Cart id: %s" %(self.id)
@@ -126,6 +126,7 @@ class Order(models.Model):
     status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = "Pending")
     timestamp = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now_add = False, auto_now = True)
+    placed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.order_id

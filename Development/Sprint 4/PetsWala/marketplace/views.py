@@ -2,6 +2,7 @@ from urllib.request import Request
 from django.shortcuts import render, redirect, HttpResponseRedirect, reverse, Http404
 from .models import *
 from .utils import id_generator
+from django.contrib import messages
 from accounts.models import Profile, User, UserAddress 
 # from accounts.form import UserAddressForm
 from django.contrib.auth.decorators import login_required
@@ -150,6 +151,9 @@ def checkout(request):
         return HttpResponseRedirect(reverse('cart'))
     try:
         new_order = Order.objects.get(cart = cart)
+        # cart.active = True
+        # new_cart = Cart()
+        # request.session['cart_id'] = new_cart.id
     except Order.DoesNotExist:
         new_order = Order()
         new_order.cart = cart
@@ -158,6 +162,7 @@ def checkout(request):
         new_order.city = request.user.city
         new_order.order_id = id_generator()
         new_order.sub_total = cart.total
+        new_order.placed = True
         # new_order.final_total = cart.total
         new_order.save()
     except:
@@ -189,6 +194,13 @@ def checkout(request):
 
         
 def order_complete(request):
+
+    cart_id = request.session['cart_id']
+    cart = Cart.objects.get(id = cart_id)
+    cart.active = True
+    cart.save()
+    new_cart = Cart()
+    request.session['cart_id'] = new_cart.id
     template = 'marketplace/order-comlete.html'
     return render(request, template, {})
 
@@ -207,11 +219,19 @@ def view_orders(request):
             if ((u_status == "Pending") or (u_status == "Started") or (u_status == "Finished") or (u_status == "Abandoned")):       #To validate status change form input
                 object.status = u_status
                 object.save()
+                messages.success(request, f'Order Status Has Been Updated!')
             
         
 
     template = 'marketplace/view_orders.html'
-    vendor_orders = CartItem.objects.filter(vendor = request.user.username)
+    carts = Cart.objects.filter(active=True)
+    vendor_orders = []
+    for object in carts:
+        try:
+            vendor_orders.append(CartItem.objects.get(vendor = request.user.username, cart=object))
+        except:
+            continue
+    #vendor_orders = CartItem.objects.filter(vendor = request.user.username, cart=carts)
     # users = User.objects.filter(username = vendor_orders.user)
     context={
         'orders': vendor_orders,

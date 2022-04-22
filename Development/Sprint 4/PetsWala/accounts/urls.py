@@ -5,6 +5,7 @@ urlpatterns=[
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),    
     path('profile/', views.profile, name='profile'),
+    path('my_orders', views.my_orders, name='my_orders'),
     path('service_profile/<int:id>', views.getservprofile, name='service_profile'),
     path('resque_profile/<int:id>', views.getResqProfile, name='resque_profile'),
     path('vet_profile/<int:id>', views.getVetProfile, name='vet_profile'),
