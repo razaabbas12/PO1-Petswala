@@ -62,14 +62,9 @@ def my_orders(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        image = request.FILES.get('image')
+        # image = request.FILES.get('image')
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
-        
-        prof = Profile.objects.filter(user=request.user).first()
-        if prof:
-            prof.image = image if image else prof.image
-            prof.save()
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         
         add_form = None
         if request.user.is_serviceprovider:
@@ -82,7 +77,7 @@ def profile(request):
             vet = Vet.objects.get(user=request.user)
             add_form = VetUpdateForm(instance=vet)
             
-        if u_form.is_valid() or p_form.is_valid():
+        if u_form.is_valid() or p_form.is_valid() or add_form.is_valid():
             u_form.save()
             p_form.save()
             if add_form:
