@@ -22,6 +22,7 @@ urlpatterns=[
     path('vets',views.vets.as_view(), name='vets'),
     path('vets/list/',views.getVets, name='vets_list'),
     path('vets/appointments/list',views.getVetAppointmentList, name='vets_appointment_list'),
+    path('vets/appointments/list/success',views.getVetAppointmentList, name='vets_appointment_list_success'),
     path('service_providers/appointments/list',views.getServiceAppointmentList, name='sp_appointment_list'),
     path('review/', views.Review_rate, name='review-rate'),
     path('report/<int:reported_id>', views.report_view, name="reports"),

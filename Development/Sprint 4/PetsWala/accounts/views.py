@@ -589,6 +589,86 @@ def getVetAppointmentList(request):
 
         return render(request, 'accounts/vet_appointment_list.html', context)
 
+    if request.method == 'POST':
+        user = request.user
+        vet = Vet.objects.get(user=user)
+        vet_app = Vet_appointment.objects.filter(user=vet)
+
+        a_s = request.POST.get("as")
+        if a_s=="m1":
+            vet_app.update(m1=False)  
+        
+        elif a_s=="m2":
+            vet_app.update(m2=False)
+            
+        elif a_s=="m3":
+            vet_app.update(m3=False)
+            
+        elif a_s=="m4":
+            vet_app.update(m4=False)
+
+        elif a_s=="t1":
+            vet_app.update(t1=False)  
+            
+        elif a_s=="t2":
+            vet_app.update(t2=False)
+            
+        elif a_s=="t3":
+            vet_app.update(t3=False)
+            
+        elif a_s=="t4":
+            vet_app.update(t4=False)
+            
+        elif a_s=="w1":
+            vet_app.update(w1=False)  
+            
+        elif a_s=="w2":
+            vet_app.update(w2=False)
+            
+        elif a_s=="w3":
+            vet_app.update(w3=False)
+            
+        elif a_s=="w4":
+            vet_app.update(w4=False)
+            
+        elif a_s=="th1":
+            vet_app.update(th1=False)  
+            
+        elif a_s=="th2":
+            vet_app.update(th2=False)
+            
+        elif a_s=="th3":
+            vet_app.update(th3=False)
+           
+        elif a_s=="th4":
+            vet_app.update(th4=False)
+            
+        elif a_s=="f1":
+            vet_app.update(f1=False)  
+            
+        elif a_s=="f2":
+            vet_app.update(f2=False)
+            
+        elif a_s=="f3":
+            vet_app.update(f3=False)
+            
+        elif a_s=="f4":
+            vet_app.update(f4=False)
+        else:
+            appointment = "NOT WORKING"
+            your_name = "NOT WORKING"
+
+        context = {
+            "is_vet": user.is_vet,
+            "vet_appointments": vet_app
+        }
+
+        return render(request, 'accounts/vet_appointment_list_success.html', context)
+        
+
+
+
+
 
 def getServiceAppointment(request, id):
 
