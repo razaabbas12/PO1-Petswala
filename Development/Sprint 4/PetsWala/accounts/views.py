@@ -183,7 +183,8 @@ class service_provider(CreateView):
     template_name = 'accounts/service_provider.html'
 
     def form_valid(self, form):
-        form.save()
+        serv = form.save()
+        Service_appointment.objects.create(user=serv)
         return render(self.request, 'accounts/awaiting_confirmation.html')
 
 class rescue_provider(CreateView):
@@ -199,9 +200,12 @@ class vets(CreateView):
     model = Vet
     form_class = VetsSignUpForm
     template_name = 'accounts/vets.html'
+    
 
     def form_valid(self, form):
-        form.save()
+        
+        vet = form.save()
+        Vet_appointment.objects.create(user=vet)
         return render(self.request, 'accounts/awaiting_confirmation.html')
      
 
@@ -261,7 +265,7 @@ def getservprofile(request, id):
         profreview =Profile.objects.get(user=user)
         review = Review_acc.objects.filter(profile=profreview).all()
 
-        appointment = Service_appointment.objects.get(user=service_provider)
+        appointment = Service_appointment.objects.filter(user=service_provider).first()
         
         reviews = []
         for one in review:
@@ -417,7 +421,7 @@ def getVetProfile(request, id):
         profreview =Profile.objects.get(user=user)
         review = Review_acc.objects.filter(profile=profreview).all()
 
-        appointment = Vet_appointment.objects.get(user=vet)
+        appointment = Vet_appointment.objects.filter(user=vet).first()
         
         reviews = []
         for one in review:
@@ -441,6 +445,7 @@ def getVetProfile(request, id):
             context["url"] = "vet_profile"
             context["reviews"] = reviews
             context["appointment"] = appointment
+            print(appointment)
         else:
             context['exist'] = False
     else:
@@ -808,6 +813,83 @@ def getServiceAppointmentList(request):
         }
 
         return render(request, 'accounts/sp_appointment_list.html', context)
+    
+    if request.method == 'POST':
+        user = request.user
+        vet = ServiceProvider.objects.get(user=user)
+        vet_app = Service_appointment.objects.filter(user=vet)
+
+        a_s = request.POST.get("as")
+        if a_s=="m1":
+            vet_app.update(m1=False)  
+        
+        elif a_s=="m2":
+            vet_app.update(m2=False)
+            
+        elif a_s=="m3":
+            vet_app.update(m3=False)
+            
+        elif a_s=="m4":
+            vet_app.update(m4=False)
+
+        elif a_s=="t1":
+            vet_app.update(t1=False)  
+            
+        elif a_s=="t2":
+            vet_app.update(t2=False)
+            
+        elif a_s=="t3":
+            vet_app.update(t3=False)
+            
+        elif a_s=="t4":
+            vet_app.update(t4=False)
+            
+        elif a_s=="w1":
+            vet_app.update(w1=False)  
+            
+        elif a_s=="w2":
+            vet_app.update(w2=False)
+            
+        elif a_s=="w3":
+            vet_app.update(w3=False)
+            
+        elif a_s=="w4":
+            vet_app.update(w4=False)
+            
+        elif a_s=="th1":
+            vet_app.update(th1=False)  
+            
+        elif a_s=="th2":
+            vet_app.update(th2=False)
+            
+        elif a_s=="th3":
+            vet_app.update(th3=False)
+           
+        elif a_s=="th4":
+            vet_app.update(th4=False)
+            
+        elif a_s=="f1":
+            vet_app.update(f1=False)  
+            
+        elif a_s=="f2":
+            vet_app.update(f2=False)
+            
+        elif a_s=="f3":
+            vet_app.update(f3=False)
+            
+        elif a_s=="f4":
+            vet_app.update(f4=False)
+        else:
+            appointment = "NOT WORKING"
+            your_name = "NOT WORKING"
+
+        context = {
+            "is_vet": user.is_serviceprovider,
+            "vet_appointments": vet_app
+        }
+
+        return render(request, 'accounts/sp_appointment_list_success.html', context)
+        
 
 
 

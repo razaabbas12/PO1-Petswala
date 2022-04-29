@@ -98,7 +98,7 @@ class ServiceSignUpForm(UserCreationForm):
         service.is_approved = False
         service.save()
         
-        return user
+        return service
 
 class RescueSignUpForm(UserCreationForm):
     first_name = forms.CharField(required=True)
@@ -164,7 +164,7 @@ class VetsSignUpForm(UserCreationForm):
         vet.is_approved = False
         vet.save()
         
-        return user
+        return vet
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:

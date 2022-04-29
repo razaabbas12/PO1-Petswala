@@ -2,76 +2,231 @@
 {% block content %}
 {% if is_serviceprovider %}
 <div class="container" style="padding-bottom: 7%;">
-  <div class="text-center h2" style="padding-top: 2%;">
+  <div class="text-center h1" style="padding-top: 2%;">
     Appointment Requests
   </div>
 
-  <h1>
-      Appointments for {{ sp_appointments.user }}
-  </h1>
+  <h4>
+      Appointments for {{ sp_appointments.user }}:
+  </h4>
 
   {% if sp_appointments.m1 == True %}
+  <div class="container">
   <ul>Appointment on Monday, 9AM to 10AM</ul>
+  </div>
   {% endif %}
   {% if sp_appointments.m2 == True %}
+  <div class="container">
   <ul>Appointment on Monday, 11AM to 12PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.m3 == True %}
+  <div class="container">
   <ul>Appointment on Monday, 1PM to 2PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.m4 == True %}
+  <div class="container">
   <ul>Appointment on Monday, 3PM to 4PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.t1 == True %}
+  <div class="container">
   <ul>Appointment on Tuesday, 9AM to 10AM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.t2 == True %}
+  <div class="container">
   <ul>Appointment on Tuesday, 11AM to 12PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.t3 == True %}
+  <div class="container">
   <ul>Appointment on Tuesday, 1PM to 2PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.t4 == True %}
+  <div class="container">
   <ul>Appointment on Tuesday, 3PM to 4PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.w1 == True %}
+  <div class="container">
   <ul>Appointment on Wednesday, 9AM to 10AM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.w2 == True %}
+  <div class="container">
   <ul>Appointment on Wednesday, 11AM to 12PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.w3 == True %}
+  <div class="container">
   <ul>Appointment on Wednesday, 1PM to 2PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.w4 == True %}
+  <div class="container">
   <ul>Appointment on Wednesday, 3PM to 4PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.th1 == True %}
+  <div class="container">
   <ul>Appointment on Thursday, 9AM to 10AM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.th2 == True %}
+  <div class="container">
   <ul>Appointment on Thursday, 11AM to 12PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.th3 == True %}
+  <div class="container">
   <ul>Appointment on Thursday, 1PM to 2PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.th4 == True %}
+  <div class="container">
   <ul>Appointment on Thursday, 3PM to 4PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.f1 == True %}
+  <div class="container">
   <ul>Appointment on Friday, 9AM to 10AM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.f2 == True %}
+  <div class="container">
   <ul>Appointment on Friday, 11AM to 12PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.f3 == True %}
+  <div class="container">
   <ul>Appointment on Friday, 1PM to 2PM</ul>
+</div>
   {% endif %}
   {% if sp_appointments.f4 == True %}
+  <div class="container">
   <ul>Appointment on Friday, 3PM to 4PM</ul>
+</div>
   {% endif %}
   
+  <form method="POST">
 
+    {% csrf_token %}
+
+    <h4>Select Completed Appointments:</h4></br>
+
+  
+    <select name="as" class="form-control">
+      <option value="Select Completed Appointment"></option>
+      {% if sp_appointments.m1 == True %}
+      <h6>Appointment on Monday, 9AM to 10AM</h6>
+      <option value="m1">9AM to 10AM, Monday</option>
+      {% endif %}
+  
+      {% if sp_appointments.m2 == True %}
+      <h6>Appointment on Monday, 11AM to 12PM</h6>
+      <option value="m2">11AM to 12PM, Monday</option>
+      {% endif %}
+  
+      {% if sp_appointments.m3 == True %}
+      <h6>Appointment on Monday, 1PM to 2PM</h6>
+      <option value="m3">1PM to 2PM, Monday</option>
+      {% endif %}
+  
+      {% if sp_appointments.m4 == True %}
+      <h6>Appointment on Monday, 3PM to 4PM</h6>
+      <option value="m4">3PM to 4PM, Monday</option>
+      {% endif %}
+  
+      {% if sp_appointments.t1 == True %}
+      <h6>Appointment on Tuesday, 9AM to 10AM</h6>
+      <option value="t1">9AM to 10AM, Tuesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.t2 == True %}
+      <h6>Appointment on Tuesday, 11AM to 12PM</h6>
+      <option value="t2">11AM to 12PM, Tuesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.t3 == True %}
+      <h6>Appointment on Tuesday, 1PM to 2PM</h6>
+      <option value="t3">1PM to 2PM, Tuesday</option>
+      {% endif %}
+  
+      {% if vet_appointments.t4 == True %}
+      <h6>Appointment on Tuesday, 3PM to 4PM</h6>
+      <option value="t4">3PM to 4PM, Tuesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.w1 == True %}
+      <h6>Appointment on Wednesday, 9AM to 10AM</h6>
+      <option value="w1">9AM to 10AM, Wednesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.w2 == True %}
+      <h6>Appointment on Wednesday, 11AM to 12PM</h6>
+      <option value="w2">11AM to 12PM, Wednesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.w3 == True %}
+      <h6>Appointment on Wednesday, 1PM to 2PM</h6>
+      <option value="w3">1PM to 2PM, Wednesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.w4 == True %}
+      <h6>Appointment on Wednesday, 3PM to 4PM</h6>
+      <option value="w4">3PM to 4PM, Wednesday</option>
+      {% endif %}
+  
+      {% if sp_appointments.th1 == True %}
+      <h6>Appointment on Thursday, 9AM to 10AM</h6>
+      <option value="th1">9AM to 10AM, Thursday</option>
+      {% endif %}
+  
+      {% if sp_appointments.th2 == True %}
+      <h6>Appointment on Thursday, 11AM to 12PM</h6>
+      <option value="th2">11AM to 12PM, Thursday</option>
+      {% endif %}
+  
+      {% if sp_appointments.th3 == True %}
+      <h6>Appointment on Thursday, 1PM to 2PM</h6>
+      <option value="th3">1PM to 2PM, Thursday</option>
+      {% endif %}
+  
+      {% if sp_appointments.th4 == True %}
+      <h6>Appointment on Thursday, 3PM to 4PM</h6>
+      <option value="th4">3PM to 4PM, Thursday</option>
+      {% endif %}
+  
+      {% if sp_appointments.f1 == True %}
+      <h6>Appointment on Friday, 9AM to 10AM</h6>
+      <option value="f1">9AM to 10AM, Friday</option>
+      {% endif %}
+  
+      {% if sp_appointments.f2 == True %}
+      <h6>Appointment on Friday, 11AM to 12PM</h6>
+      <option value="f2">11AM to 12PM, Friday</option>
+      {% endif %}
+  
+      {% if sp_appointments.f3 == True %}
+      <h6>Appointment on Friday, 1PM to 2PM</h6>
+      <option value="f3">1PM to 2PM, Friday</option>
+      {% endif %}
+  
+      {% if sp_appointments.f4 == True %}
+      <h6>Appointment on Friday, 3PM to 4PM</h6>
+      <option value="f4">3PM to 4PM, Friday</option>
+      {% endif %}
+    </select>
+
+    <div class="col-12 text-center">
+      <button type="submit" class="btn btn-success rounded shadow">Completed</button>
+
+    </div>
+  
+    </form>
   
 </div>
 {%else%}

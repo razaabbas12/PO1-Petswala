@@ -47,7 +47,8 @@
     </div>
   </div>
 </section>
-
+<section class="main_wrapper">
+<h3>Book Appointment Now!</h3>
 <form action="{% url 'sp_appointment' uid %}" method="POST">
   {% csrf_token %}
   <div class="row">
@@ -74,10 +75,11 @@
       
       </div>
     </div>
+    {% if appointment %}
     <div class="col-md-6">
       <div class="form-group mb-30">
         <select name="a" class="form-control">
-          <option value="Choose your Schedule"></option>
+          <option value="Choose your slot"></option>
           {% if appointment.m1 == False %}
           <option value="m1">9AM to 10AM, Monday</option>
           {% endif %}
@@ -181,6 +183,7 @@
         {% endif %} -->
       </div>
     </div>
+    {% endif %}
     <!-- <div class="col-md-6">
       <div class="form-group mb-30">
         <select name="your-date" class="form-control">
@@ -195,18 +198,20 @@
     </div> -->
     <div class="col-12">
       <div class="form-group mb-30">
-        <textarea name="your-message" class="form-control" placeholder="Your Message">
-        </textarea>
+        <input type="text" name="your-message" class="form-control" placeholder="Optional Description" >
+        <!-- <textarea name="your-message" class="form-control" placeholder="Your Message">
+        </textarea> -->
       </div>
     </div>
     <div class="col-12 text-center">
-      <button type="submit" class="btn dento-btn">Book Appointment Now</button>
+      <button type="submit" class="btn btn-success rounded shadow">Book Appointment Now</button>
 
     </div>
 
   </div>
 
 </form>
+</section>
 
 <div class="container mt-5">
   <h5 class="text-uppercase font-weight-bold">Reviews</h5>

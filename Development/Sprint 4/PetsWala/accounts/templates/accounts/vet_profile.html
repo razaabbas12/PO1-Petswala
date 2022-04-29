@@ -19,169 +19,7 @@
               {{experience}}
             </p>
             
-            <form action="{% url 'vet_appointment' uid %}" method="POST">
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group mb-30">
-                    <input type="text" name="your-name" class="form-control" placeholder="Your Name" required>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group mb-30">
-                    <input type="text" name="your-phone" class="form-control" placeholder="Your Phone" required>
-                  
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group mb-30">
-                    <input type="text" name="your-email" class="form-control" placeholder="Your Email" required>
-                  
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group mb-30">
-                    <input type="text" name="your-address" class="form-control" placeholder="Your Address" required>
-                  
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group mb-30">
-                    <select name="a" class="form-control">
-                      <option value="Choose your Schedule"></option>
-                      {% if appointment.m1 == False %}
-                      <option value="m1">9AM to 10AM, Monday</option>
-                      {% endif %}
-
-                      {% if appointment.m2 == False %}
-                      <option value="m2">11AM to 12PM, Monday</option>
-                      {% endif %}
-
-                      {% if appointment.m3 == False %}
-                      <option value="m3">1PM to 2PM, Monday</option>
-                      {% endif %}
-
-                      {% if appointment.m4 == False %}
-                      <option value="m4">3PM to 4PM, Monday</option>
-                      {% endif %}
-
-                      {% if appointment.t1 == False %}
-                      <option value="t1">9AM to 10AM, Tuesday</option>
-                      {% endif %}
-
-                      {% if appointment.t2 == False %}
-                      <option value="t2">11AM to 12PM, Tuesday</option>
-                      {% endif %}
-
-                      {% if appointment.t3 == False %}
-                      <option value="t3">1PM to 2PM, Tuesday</option>
-                      {% endif %}
-
-                      {% if appointment.t4 == False %}
-                      <option value="t4">3PM to 4PM, Tuesday</option>
-                      {% endif %}
-
-                      {% if appointment.w1 == False %}
-                      <option value="w1">9AM to 10AM, Wednesday</option>
-                      {% endif %}
-
-                      {% if appointment.w2 == False %}
-                      <option value="w2">11AM to 12PM, Wednesday</option>
-                      {% endif %}
-
-                      {% if appointment.w3 == False %}
-                      <option value="w3">1PM to 2PM, Wednesday</option>
-                      {% endif %}
-
-                      {% if appointment.w4 == False %}
-                      <option value="w4">3PM to 4PM, Wednesday</option>
-                      {% endif %}
-
-                      {% if appointment.th1 == False %}
-                      <option value="th1">9AM to 10AM, Thursday</option>
-                      {% endif %}
-
-                      {% if appointment.th2 == False %}
-                      <option value="th2">11AM to 12PM, Thursday</option>
-                      {% endif %}
-
-                      {% if appointment.th3 == False %}
-                      <option value="th3">1PM to 2PM, Thursday</option>
-                      {% endif %}
-
-                      {% if appointment.th4 == False %}
-                      <option value="th4">3PM to 4PM, Thursday</option>
-                      {% endif %}
-
-                      {% if appointment.f1 == False %}
-                      <option value="f1">9AM to 10AM, Friday</option>
-                      {% endif %}
-
-                      {% if appointment.f2 == False %}
-                      <option value="f2">11AM to 12PM, Friday</option>
-                      {% endif %}
-
-                      {% if appointment.f3 == False %}
-                      <option value="f3">1PM to 2PM, Friday</option>
-                      {% endif %}
-
-                      {% if appointment.f4 == False %}
-                      <option value="f4">3PM to 4PM, Friday</option>
-                      {% endif %}
-
-                    </select>
-
-                    <!-- {% if appointment.a1 == False %}
-                      <input type="radio" name="a" value="a1"><span>9AM to 10AM</span></br>
-                    {% endif %}
-
-                    {% if appointment.a2 == False %}
-                      <input type="radio" name="a" value="a2"><span>11AM to 12PM</span></br>
-                    {% endif %}
-
-                    {% if appointment.a3 == False %}
-                      <input type="radio" name="a" value="a3"><span>1PM to 2PM</span></br>
-                    {% endif %}
-
-                    {% if appointment.a4 == False %}
-                      <input type="radio" name="a" value="a4"><span>3PM to 4PM</span></br>
-                    {% endif %}
-
-                    {% if appointment.a1 == True and appointment.a2 == True and appointment.a3 == True and appointment.a4 == True%}
-                      <span>Sorry, no appointments available</span>
-                    {% endif %} -->
-                  </div>
-                </div>
-                <!-- <div class="col-md-6">
-                  <div class="form-group mb-30">
-                    <select name="your-date" class="form-control">
-                      <option value="Choose Date"></option>
-                      <option value="Monday">Monday</option>
-                      <option value="Tuesday">Tuesday</option>
-                      <option value="Wednesday">Wednesday</option>
-                      <option value="Thursday">Thursday</option>
-                      <option value="Friday">Friday</option>
-                    </select>
-                  </div>
-                </div> -->
-                <div class="col-12">
-                  <div class="form-group mb-30">
-                    <textarea name="your-message" class="form-control" placeholder="Your Message">
-                    </textarea>
-                  </div>
-                </div>
-                <div class="col-12 text-center">
-                  <button type="submit" class="btn dento-btn">Book Appointment Now</button>
-
-                </div>
-
-              </div>
-
-            </form>
-
-            <a href="#" class="btn btn-success">
-              Schedule Appointment
-            </a>
+            
             
             <hr>
             <p class="text-secondary" style="font-size:medium;">Contact Information</p>
@@ -212,6 +50,172 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="main_wrapper">
+    <h3>Book Appointment Now!</h3>
+    <form action="{% url 'vet_appointment' uid %}" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-name" class="form-control" placeholder="Your Name" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-phone" class="form-control" placeholder="Your Phone" required>
+          
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-email" class="form-control" placeholder="Your Email" required>
+          
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-address" class="form-control" placeholder="Your Address" required>
+          
+          </div>
+        </div>
+        {% if appointment %}
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <select name="a" class="form-control">
+              <option value="Choose your Schedule"></option>
+              {% if appointment.m1 == False %}
+              <option value="m1">9AM to 10AM, Monday</option>
+              {% endif %}
+
+              {% if appointment.m2 == False %}
+              <option value="m2">11AM to 12PM, Monday</option>
+              {% endif %}
+
+              {% if appointment.m3 == False %}
+              <option value="m3">1PM to 2PM, Monday</option>
+              {% endif %}
+
+              {% if appointment.m4 == False %}
+              <option value="m4">3PM to 4PM, Monday</option>
+              {% endif %}
+
+              {% if appointment.t1 == False %}
+              <option value="t1">9AM to 10AM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.t2 == False %}
+              <option value="t2">11AM to 12PM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.t3 == False %}
+              <option value="t3">1PM to 2PM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.t4 == False %}
+              <option value="t4">3PM to 4PM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.w1 == False %}
+              <option value="w1">9AM to 10AM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.w2 == False %}
+              <option value="w2">11AM to 12PM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.w3 == False %}
+              <option value="w3">1PM to 2PM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.w4 == False %}
+              <option value="w4">3PM to 4PM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.th1 == False %}
+              <option value="th1">9AM to 10AM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.th2 == False %}
+              <option value="th2">11AM to 12PM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.th3 == False %}
+              <option value="th3">1PM to 2PM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.th4 == False %}
+              <option value="th4">3PM to 4PM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.f1 == False %}
+              <option value="f1">9AM to 10AM, Friday</option>
+              {% endif %}
+
+              {% if appointment.f2 == False %}
+              <option value="f2">11AM to 12PM, Friday</option>
+              {% endif %}
+
+              {% if appointment.f3 == False %}
+              <option value="f3">1PM to 2PM, Friday</option>
+              {% endif %}
+
+              {% if appointment.f4 == False %}
+              <option value="f4">3PM to 4PM, Friday</option>
+              {% endif %}
+
+            </select>
+
+            <!-- {% if appointment.a1 == False %}
+              <input type="radio" name="a" value="a1"><span>9AM to 10AM</span></br>
+            {% endif %}
+
+            {% if appointment.a2 == False %}
+              <input type="radio" name="a" value="a2"><span>11AM to 12PM</span></br>
+            {% endif %}
+
+            {% if appointment.a3 == False %}
+              <input type="radio" name="a" value="a3"><span>1PM to 2PM</span></br>
+            {% endif %}
+
+            {% if appointment.a4 == False %}
+              <input type="radio" name="a" value="a4"><span>3PM to 4PM</span></br>
+            {% endif %}
+
+            {% if appointment.a1 == True and appointment.a2 == True and appointment.a3 == True and appointment.a4 == True%}
+              <span>Sorry, no appointments available</span>
+            {% endif %} -->
+          </div>
+        </div>
+        {% endif %}
+        <!-- <div class="col-md-6">
+          <div class="form-group mb-30">
+            <select name="your-date" class="form-control">
+              <option value="Choose Date"></option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+            </select>
+          </div>
+        </div> -->
+        <div class="col-12">
+          <div class="form-group mb-30">
+            <input type="text" name="your-message" class="form-control" placeholder="Optional Description" >
+            <!-- <textarea name="your-message" class="form-control" placeholder="Your Message">
+            </textarea> -->
+          </div>
+        </div>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-success rounded shadow">Book Appointment Now</button>
+
+        </div>
+
+      </div>
+
+    </form>
   </section>
 
   <div class="container mt-5">
