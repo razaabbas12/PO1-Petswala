@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<section class="main_wrapper">
+<h3>
+  Your rescue request has been submitted.
+</h3>
+<p> 
+  Your rescue id is <strong>{{id}}</strong> for future references.
+</p>
+<a class="btn btn-primary rounded shadow" href="/accounts/requested/rescue/detail/{{id}}">View more details</a>
+<a class="btn btn-primary rounded shadow" href="/">Go to Home Page</a>
+</section>
+{% endblock content%}

@@ -1,0 +1,118 @@
+.main_wrapper {
+  padding: 2rem;
+  position: relative;
+  background-color: #f8f9fa;
+}
+.main_wrapper::after {
+  width: 100%;
+  height: 400px;
+  top: 0px;
+  left: 0px;
+  content: "";
+  position: absolute;
+  background: linear-gradient(45deg, #756efe, #88edff);
+}
+.main_wrapper .container {
+  border-radius: 10px !important;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.main_wrapper .row img {
+  width: 100%;
+}
+.presentation {
+  width: 80%;
+  margin-left: auto;
+  margin-right: 2rem;
+}
+.presentation ul {
+  margin: 0px !important;
+  padding: 0px !important;
+  list-style: none;
+}
+.presentation h4 {
+  font-size: 20px;
+  color: rgb(75, 74, 74);
+}
+.presentation h1 {
+  color: #111;
+  font-size: 4rem;
+
+  margin: 0px;
+}
+.presentation h2 {
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.presentation h2 div {
+  margin-left: 1rem;
+}
+.presentation h2 div i {
+  color: #f8b704;
+}
+.presentation h2 div i.empty {
+  color: #eee;
+}
+.presentation p {
+  font-size: 17px;
+  color: rgb(75, 74, 74);
+}
+.presentation ul a {
+  color: rgb(75, 74, 74);
+
+  display: flex;
+  align-items: center;
+}
+.presentation ul > * + * {
+  margin-top: 1rem !important;
+}
+
+.presentation ul a p {
+  margin-bottom: 0px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+.presentation ul a i {
+  font-size: 17px;
+}
+.buttons_wrappper button {
+  width: 100%;
+  height: 45px;
+  border: none;
+  outline: none;
+  color: #fff;
+  background-color: #111;
+}
+.buttons_wrappper button:hover {
+  color: #fff;
+}
+@media screen and (max-width: 995px) {
+  .presentation {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .presentation h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 350px) {
+  .presentation h1 {
+    font-size: 2rem;
+  }
+  .presentation h4,
+  .presentation h2 {
+    font-size: 16px;
+  }
+  .presentation p {
+    font-size: 15px !important;
+  }
+  .buttons_wrappper button {
+    font-size: 12px;
+  }
+  .presentation ul p {
+    word-break: break-all;
+  }
+}

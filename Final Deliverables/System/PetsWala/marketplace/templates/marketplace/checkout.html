@@ -1,0 +1,80 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="{% static 'blog/css/tailwind.min.css' %}">
+<div class="">
+<div style = "background: #fff">
+    <div class="py-12">
+        <div class="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg md:max-w-5xl">
+          <div class="text-center" style="padding: 20px 0px 20px 0px">
+            <h2 style="font-size: 40px; text-transform: uppercase; font-weight: 800"> Checkout </h2>
+          </div>
+            <div class="md:flex ">
+                <div class="w-full p-4 px-5 py-5">
+                    <div class="md:grid md:grid-cols-3 gap-2 ">
+                        <div class="col-span-2 p-5">
+                            {% comment %} <h1 class="text-xl font-medium " style="margin-bottom: 20px">Address Details</h1>
+                            <form class="" action="{% url "user_add_address" %}?redirect=checkout" method="post">
+                              {% csrf_token %}
+                                {{address_form|crispy}}
+                                <button type="submit" class = "btn btn-secondary" name="button">Update Address</button>
+                            </form> {% endcomment %}
+                            <div class="flex justify-between items-center mt-6 pt-6 border-t">
+                                <div class="flex items-center"> <i class="fa fa-arrow-left text-sm pr-2"></i>
+                                  <a href="{% url 'marketplace' %}">
+                                  <span class="text-md font-medium text-blue-500">Continue Shopping</span> </div>
+                                  </a>
+                            </div>
+                        </div>
+                        <div style="background: #d8d8d8" class=" p-5 rounded overflow-visible"> <span class="text-xl text-center font-medium text-black block pb-3">Order Summary</span>
+
+                          <div class="panel-body">
+                          <div class="col-md-12" style="margin-top: 10px">
+                                <strong>Order Code ID</strong>
+                                <div class="pull-right"><p>{{new_order.order_id}}</p></div>
+                            </div>
+                            <hr>
+                            {% for order_item in new_order.cart.cartitem_set.all %}
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <strong>{{order_item.product}} ({{order_item.product.price}})&emsp; x {{order_item.quantity}}</strong>
+                                <div class="pull-right"><span>Total price: <span>$</span>{{order_item.line_total}}</span></div>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                            
+                            <div class="col-md-12" style="margin-top: 60px">
+                                <strong>Shipping Address</strong>
+                                <div class="pull-right"><span>{{new_order.user.address}}, {{new_order.user.city}}</span></div>
+                                <hr>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 60px">
+                                <strong>Tax Total</strong>
+                                <div class="pull-right"><span>$</span><span>{{new_order.tax_total}}</span></div>
+                                <hr>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 10px">
+                                <strong>Proucts Sub-total</strong>
+                                <div class="pull-right"><span>$</span><span>{{new_order.cart.total}}</span></div>
+                                <hr>
+                            </div>
+                            <div class="col-md-12"  style="margin-top: 10px">
+                                <strong>Final Order Total</strong>
+                                <div class="pull-right"><span>$</span><span>{{new_order.cart.total}}</span></div>
+                                <hr>
+                            </div>
+
+                        </div>
+
+                            <button style = "margin-top: 50px" class="h-12 w-full bg-blue-500 rounded focus:outline-none text-white hover:bg-blue-600">
+                                <a href="/marketplace/order/complete" >Order Now! </a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

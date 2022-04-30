@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<section class="main_wrapper">
+    <div class="container" >
+      <center>
+      <h1>Review your information</h1>
+      <strong>Your Name: </strong>{{your_name}}<br/>
+      <strong>Phone: </strong>{{your_phone}}<br/>
+      <strong>Email: </strong>{{your_email}}<br/>
+      <strong>Address: </strong>{{your_address}}<br/>
+      <strong>Time: </strong>{{your_schedule}}<br/>
+      <strong>Date: </strong>{{your_date}}<br/>
+      <strong>Message: </strong>{{your_message}}<br/>
+      <strong>Vet: </strong>{{your_vet}}<br/>
+      <br/><br/>
+      <strong>Note: </strong>This appointment has not been set yet. We will contact you shortly via phone to confirm your appointment.
+      <br/><br/>
+
+      </center>
+
+      
+
+    
+  
+
+
+  
+
+{% endblock content%}
+

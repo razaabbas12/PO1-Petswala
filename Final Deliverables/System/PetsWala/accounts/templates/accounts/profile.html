@@ -1,0 +1,117 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<section class="main_wrapper">
+    <div class="container" >
+      <div class="row py-4 px-2">
+        <div class="col-lg-6 col-md-12">
+          <img class="img-fluid rounded" src="{{ image }}" alt="Profile pic" />  
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="presentation">
+            <h4>{{whoami}}</h4>
+            <h1>{{ name }}</h1>
+            <p>Description: {{info}}</p>
+            <hr>
+            
+            <ul>
+              <li>
+                <a href="mailto:{{email}}">
+                  <i class="far fa-envelope"></i>
+                  {{email}}
+                </a>
+              </li>
+              <li>
+                <a href="tel:{{phone_number}}"
+                  ><i class="fas fa-phone"></i>
+                  {{phone_number}}
+                </a>
+              </li>
+            </ul>
+            <a href="#updatediv">
+              <button class="btn btn-primary rounded shadow"  type="submit">Edit Information</button>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- style=" padding:0px 0px 35px 0px; " -->
+  {% if whoami != "User" and whoami != "Vendor" %}
+  <div class="container mt-5">
+    <h5 class="text-uppercase font-weight-bold">Reviews</h5>
+    <hr class="mt-0 pt-0">
+    <div class="row">
+      <div class="col-12 mt-2">
+
+        {% for review in reviews %}
+        <div class="card rounded">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-1">
+                <img src={{ review.image }} class="img-fluid" />
+              </div>
+              <div class="col-md-11">
+                <p>
+                  <strong>{{review.name}}</strong>
+                  {% for temp in review.rate %}
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                  {% endfor %}
+                </p>
+                <div class="clearfix"></div>
+                <p>{{review.comment}}</p>
+                <p class="text-secondary" style="font-size: small;">Posted at: {{ review.time }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <hr id="updatediv"> 
+  </div>
+{% endif %}
+  <section class="main_wrapper" >
+    <div class="container"  >
+      <div class="row py-4 px-2">
+        <div class="col-md-12 mx-auto">
+          <div style=" position: relative; z-index: 6">
+            <div class="text-black">
+              <h2>Update Info</h2>
+            </div>
+            <div class="content-section">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {% comment %} <legend class="border-bottom mb-4">Update Info</legend> {% endcomment %}
+                        {{ u_form|crispy }}
+                        {{ p_form|crispy }}
+                        {% if add_form%}
+                        {{ add_form|crispy }}
+                        {% endif %}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'password_reset' %}">Change Password</a>
+                    </div>
+                </form>
+             </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </section>
+
+
+  
+
+{% endblock content%}
+

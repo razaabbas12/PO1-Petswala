@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    {% for student in products %}
+        <h1>{{ student.category}}</h1>
+        {{ student.vendor }}
+        {{ student.title }}
+        {{ student.description }}
+    {% endfor %}
+
+{% endblock content%}

@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+{% load pagination_tags %}
+{% block content %}
+
+<div class="container" style="padding-bottom: 7%"> 
+  <div class="text-center h2" style="padding-top: 2%;">
+    Approved Veterinary Doctors
+  </div>
+  
+  <div class="row">
+    {% autopaginate vets 4 %}
+    {% for provider in vets %}
+
+        <div class="card col-lg-3 col-md-4 col-12 my-3" style="width:18rem; padding:1%">
+          <img class="card-img-top" src="{{provider.image}}" alt="Profile Picture">
+
+          <div class="card-body">
+            <h5 class="card-title">
+              {{provider.name}}
+            </h5>
+            <a href="{{provider.profile_url}}" class="btn btn-success rounded">
+              View Profile
+            </a>
+
+            <p class="card-text">
+            <h6>Description: </h6>
+            {{provider.experience}}
+            </p>
+          </div>
+        </div>
+
+    {% endfor %}
+
+  </div>
+  <div class="float-right">
+    {% paginate %}
+  </div>
+
+</div>
+
+{% endblock content %}

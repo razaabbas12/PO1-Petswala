@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+      <section class="main_wrapper">
+        <div class="form_wrapper">
+          <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <h1>Delete Post</h1>
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Are you sure you want to delete the post "{{ object.title }}"</legend>
+              {% comment %} <h3>Are you sure you want to delete the post "{{ object.title }}"</h3> {% endcomment %}
+            </fieldset>
+            <div class="form-group">
+              <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+              <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
+            </div>
+          </form>
+          <div class="img_wrapper">
+            <img src="/static/blog/img/add_prodiuct_2_color.svg" alt="" />
+          </div>
+        </div>
+      </section>
+
+{% endblock content %}

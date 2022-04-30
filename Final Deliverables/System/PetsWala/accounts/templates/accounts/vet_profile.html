@@ -1,0 +1,290 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<section class="main_wrapper">
+    <div class="container" >
+      <div class="row py-4 px-2">
+        <div class="col-lg-6 col-md-12">
+          <img class="img-fluid rounded" src="{{ image }}" alt="profile pic"/>  {% comment %}  add class="rounded-circle account-img" for round user profile picture {% endcomment %}
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="presentation">
+            <h4>Veterinary Doctor</h4>
+            <h1>{{ name }}</h1>
+            <p>
+              {{experience}}
+            </p>
+            
+            
+            
+            <hr>
+            <p class="text-secondary" style="font-size:medium;">Contact Information</p>
+            <ul>
+              <li>
+                <a href="mailto:{{email}}">
+                  <i class="far fa-envelope"></i>
+                  {{email}}
+                </a>
+              </li>
+              <li>
+                <a href="tel:{{phone_number}}"
+                  ><i class="fas fa-phone"></i>
+                  {{phone_number}}
+                </a>
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+              <a href="/accounts/report/{{uid}}" class="btn btn-danger rounded shadow">
+                Report
+              </a>
+            {% else %}
+              <a href="/login/?next=/accounts/report/{{uid}}" class="btn btn-danger rounded shadow">
+                Report
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main_wrapper">
+    <h3>Book Appointment Now!</h3>
+    <form action="{% url 'vet_appointment' uid %}" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-name" class="form-control" placeholder="Your Name" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-phone" class="form-control" placeholder="Your Phone" required>
+          
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-email" class="form-control" placeholder="Your Email" required>
+          
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <input type="text" name="your-address" class="form-control" placeholder="Your Address" required>
+          
+          </div>
+        </div>
+        {% if appointment %}
+        <div class="col-md-6">
+          <div class="form-group mb-30">
+            <select name="a" class="form-control">
+              <option value="Choose your Schedule"></option>
+              {% if appointment.m1 == False %}
+              <option value="m1">9AM to 10AM, Monday</option>
+              {% endif %}
+
+              {% if appointment.m2 == False %}
+              <option value="m2">11AM to 12PM, Monday</option>
+              {% endif %}
+
+              {% if appointment.m3 == False %}
+              <option value="m3">1PM to 2PM, Monday</option>
+              {% endif %}
+
+              {% if appointment.m4 == False %}
+              <option value="m4">3PM to 4PM, Monday</option>
+              {% endif %}
+
+              {% if appointment.t1 == False %}
+              <option value="t1">9AM to 10AM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.t2 == False %}
+              <option value="t2">11AM to 12PM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.t3 == False %}
+              <option value="t3">1PM to 2PM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.t4 == False %}
+              <option value="t4">3PM to 4PM, Tuesday</option>
+              {% endif %}
+
+              {% if appointment.w1 == False %}
+              <option value="w1">9AM to 10AM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.w2 == False %}
+              <option value="w2">11AM to 12PM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.w3 == False %}
+              <option value="w3">1PM to 2PM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.w4 == False %}
+              <option value="w4">3PM to 4PM, Wednesday</option>
+              {% endif %}
+
+              {% if appointment.th1 == False %}
+              <option value="th1">9AM to 10AM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.th2 == False %}
+              <option value="th2">11AM to 12PM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.th3 == False %}
+              <option value="th3">1PM to 2PM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.th4 == False %}
+              <option value="th4">3PM to 4PM, Thursday</option>
+              {% endif %}
+
+              {% if appointment.f1 == False %}
+              <option value="f1">9AM to 10AM, Friday</option>
+              {% endif %}
+
+              {% if appointment.f2 == False %}
+              <option value="f2">11AM to 12PM, Friday</option>
+              {% endif %}
+
+              {% if appointment.f3 == False %}
+              <option value="f3">1PM to 2PM, Friday</option>
+              {% endif %}
+
+              {% if appointment.f4 == False %}
+              <option value="f4">3PM to 4PM, Friday</option>
+              {% endif %}
+
+            </select>
+
+            <!-- {% if appointment.a1 == False %}
+              <input type="radio" name="a" value="a1"><span>9AM to 10AM</span></br>
+            {% endif %}
+
+            {% if appointment.a2 == False %}
+              <input type="radio" name="a" value="a2"><span>11AM to 12PM</span></br>
+            {% endif %}
+
+            {% if appointment.a3 == False %}
+              <input type="radio" name="a" value="a3"><span>1PM to 2PM</span></br>
+            {% endif %}
+
+            {% if appointment.a4 == False %}
+              <input type="radio" name="a" value="a4"><span>3PM to 4PM</span></br>
+            {% endif %}
+
+            {% if appointment.a1 == True and appointment.a2 == True and appointment.a3 == True and appointment.a4 == True%}
+              <span>Sorry, no appointments available</span>
+            {% endif %} -->
+          </div>
+        </div>
+        {% endif %}
+        <!-- <div class="col-md-6">
+          <div class="form-group mb-30">
+            <select name="your-date" class="form-control">
+              <option value="Choose Date"></option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+            </select>
+          </div>
+        </div> -->
+        <div class="col-12">
+          <div class="form-group mb-30">
+            <input type="text" name="your-message" class="form-control" placeholder="Optional Description" >
+            <!-- <textarea name="your-message" class="form-control" placeholder="Your Message">
+            </textarea> -->
+          </div>
+        </div>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-success rounded shadow">Book Appointment Now</button>
+
+        </div>
+
+      </div>
+
+    </form>
+  </section>
+
+  <div class="container mt-5">
+    <h5 class="text-uppercase font-weight-bold">Reviews</h5>
+    <hr class="mt-0 pt-0">
+    <div class="row">
+      <div class="col-12 mt-2">
+
+        {% for review in reviews %}
+        <div class="card rounded">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-1">
+                <img src={{ review.image }} class="img-fluid" />
+              </div>
+              <div class="col-md-11">
+                <p>
+                  <strong>{{review.name}}</strong>
+                  {% for temp in review.rate %}
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                  {% endfor %}
+                </p>
+                <div class="clearfix"></div>
+                <p>{{review.comment}}</p>
+                <p class="text-secondary" style="font-size: small;">Posted at: {{ review.time }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="container mt-5">
+    <h5 class="text-uppercase font-weight-bold">Write Your Review</h5>
+    <hr>
+    {% if user.is_authenticated %}
+    <form class="review-form" method="POST" action="/accounts/review/">
+      <input type="hidden" name="uid" id="uid" value="{{ uid }}" />
+      <input type="hidden" name="url" id="url" value="{{ url }}" />
+      <div class="form-group">
+        <textarea class="form-control rounded" type="text" name="comment" placeholder="Your Review"></textarea>
+      </div>
+      {% csrf_token %}
+      <div class="form-group">
+        <div class="input rating">
+          <p class="text-uppercase font-weight-bold">Your Rating</p>
+          <div class="rating-wrapper">
+            <input type="radio" id="star-1" name="rate" value="1" /><label for="star-1" class="fas fa-star"></label>
+            <input type="radio" id="star-2" name="rate" value="2" /><label for="star-2" class="fas fa-star"></label>
+            <input type="radio" id="star-3" name="rate" value="3" /><label for="star-3" class="fas fa-star"></label>
+            <input type="radio" id="star-4" name="rate" value="4" /><label for="star-4" class="fas fa-star"></label>
+            <input type="radio" id="star-5" name="rate" value="5" /><label for="star-5" class="fas fa-star"></label>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary rounded shadow" type="submit">Post</button>
+      {% else %}
+      <p>You must be logged in to post the comment. <a href="{% url 'login'%}">Login Here</a></p>
+      {% endif %}
+    </form>
+    <hr>
+  </div>
+  
+
+
+  
+
+{% endblock content%}
+
